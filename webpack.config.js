@@ -27,7 +27,7 @@ module.exports = {
                     'css-loader',
                     'postcss-loader',
                     {
-                        loader: "less-loader",
+                        loader: 'less-loader',
                         options: {
                             javascriptEnabled: true
                         }
