@@ -1,11 +1,11 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-// const CompressionPlugin = require('compression-webpack-plugin');
-// const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
+const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
     output: {
-        library: 'sub-app-portal',
+        library: 'sub-app-react1',
     },
     module: {
         rules: [
@@ -56,7 +56,7 @@ module.exports = {
         }
     },
     devServer: {
-        port: '3001',
+        port: '3002',
         // compress: true,
         // hot: true,
         headers: {
@@ -68,12 +68,12 @@ module.exports = {
             template: 'src/index.html',
             filename: 'index.html',
         }),
-        // new CompressionPlugin(
-        //     {
-        //         test: /\.js(\?.*)?$/i
-        //     }
-        // ),
-        // new MomentLocalesPlugin(),
+        new CompressionPlugin(
+            {
+                test: /\.js(\?.*)?$/i
+            }
+        ),
+        new MomentLocalesPlugin(),
         // new BundleAnalyzerPlugin()
     ],
 };

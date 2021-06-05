@@ -8,13 +8,17 @@
 <div>
     <div>
         <h1>React Micro Starter - main is work</h1>
-        <div />
         <div>
             <ul>
-                <li onclick="push('/sub-app-react1')">Go to sub-app -eact1</li>
+                <li onclick="push('/sub-app-portal')">Go to sub-app portal</li>
+                <li onclick="push('/sub-app-react1')">Go to sub-app react1</li>
             </ul>
             <div id='sub-app-container'></div>
         </div>
     </div>
 </div>
+<script>
+    function push(subapp) { history.pushState(null, subapp, subapp) }
+</script>
+</body>
 </html>

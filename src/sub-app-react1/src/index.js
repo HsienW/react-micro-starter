@@ -1,15 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {PortalRootDom} from './root/root';
+import {React1RootDom} from './root/root';
 import '../public-path';
 
 
-function renderPortalRoot() {
-    ReactDOM.render(<PortalRootDom />, document.getElementById('portal-root'));
+function renderReact1Root() {
+    ReactDOM.render(<React1RootDom />, document.getElementById('react1-root'));
 }
 
 if (!window.__POWERED_BY_QIANKUN__) {
-    renderPortalRoot();
+    renderReact1Root();
 }
 /**
  * bootstrap 只會再 init 的時候 call 一次, 之後重新加載會直接 call mount hook
@@ -23,11 +23,11 @@ export async function bootstrap() {
  */
 export async function mount(props) {
     console.log(props);
-    renderPortalRoot();
+    renderReact1Root();
 }
 /**
  * 每次切換 or 卸載進子專案都會 call unmount, 一般會在這裡銷毀子專案的 instance
  */
 export async function unmount() {
-    ReactDOM.unmountComponentAtNode(document.getElementById('portal-root'));
+    ReactDOM.unmountComponentAtNode(document.getElementById('react1-root'));
 }
