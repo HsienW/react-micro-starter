@@ -1,7 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
     module: {
@@ -52,6 +52,11 @@ module.exports = {
             chunks: 'all'
         }
     },
+    devServer: {
+        port: '3001',
+        compress: true,
+        hot: true,
+    },
     plugins: [
         new HtmlWebpackPlugin({
             template: 'src/index.html',
@@ -63,6 +68,6 @@ module.exports = {
             }
         ),
         new MomentLocalesPlugin(),
-        new BundleAnalyzerPlugin()
+        // new BundleAnalyzerPlugin()
     ],
 };

@@ -1,9 +1,11 @@
 import React from 'react';
-import { render } from 'react-dom';
+import ReactDOM from 'react-dom';
 
-function PortalRootDom(props) {
+function PortalRootViewport(props) {
     const { loading } = props;
 
+    console.log('我沒拿到我沒拿到我沒拿到我沒拿到');
+    console.log(props);
     return (
         <div>
             {loading ? <h4>Loading...</h4> : null}
@@ -12,9 +14,9 @@ function PortalRootDom(props) {
     );
 }
 
-function renderSubAppPortalRoot({ loading }) {
+function renderSubAppPortalContainer({ loading }) {
     const container = document.getElementById('sub-app-container');
-    render(<PortalRootDom loading={loading} />, container);
+    ReactDOM.render(<PortalRootViewport loading={loading} />, container);
 }
 
-export default renderSubAppPortalRoot;
+export default renderSubAppPortalContainer;
