@@ -10,6 +10,7 @@
     "install:sub-app-react1": "cd src/sub-app-react1 && npm i",
     "start": "npm-run-all --parallel start:*",
     "start:sub-app-portal": "cd src/sub-app-portal && npm start",
+    "start:sub-app-react1": "cd src/sub-app-react1 && npm start",
     "start:main": "cd src/main && npm start",
     "build": "npm-run-all --parallel build:*",
     "build:sub-app-portal": "cd src/sub-app-portal && npm build",

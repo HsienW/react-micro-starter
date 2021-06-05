@@ -54,8 +54,8 @@ module.exports = {
     },
     devServer: {
         port: '3000',
-        compress: true,
-        hot: true,
+        // compress: true,
+        // hot: true,
     },
     plugins: [
         new HtmlWebpackPlugin({

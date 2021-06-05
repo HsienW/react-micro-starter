@@ -1,17 +1,29 @@
 import { registerMicroApps, start, setDefaultMountApp } from 'qiankun';
-import renderSubAppPortalContainer from './render-sub-app/render-sub-app-portal';
+import renderSubAppPortalContainer from './render-sub-app';
 
-renderSubAppPortalContainer({ loading: true });
 const loader = loading => renderSubAppPortalContainer({ loading });
 
 registerMicroApps(
     [
         {
             name: 'sub-app-portal',
-            entry: '//localhost:3001/',
+            entry: '//localhost:3001',
             container: '#sub-app-viewport',
-            loader,
             activeRule: '/sub-app-portal',
+            loader,
+            props: {
+                routerBase: '/sub-app-portal'
+            }
+        },
+        {
+            name: 'sub-app-react1',
+            entry: '//localhost:3002',
+            container: '#sub-app-viewport',
+            activeRule: '/sub-app-react1',
+            loader,
+            props: {
+                routerBase: '/sub-app-react1'
+            }
         }
     ],
     {
@@ -33,5 +45,5 @@ registerMicroApps(
     },
 );
 
-setDefaultMountApp('/');
+setDefaultMountApp('/sub-app-portal');
 start();
