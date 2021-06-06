@@ -1,7 +1,7 @@
 import { initGlobalState } from 'qiankun';
 
 const initialState = {
-    demo: 'demo'
+    init: 'init'
 };
 
 const globalState = initGlobalState(initialState);
