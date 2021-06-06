@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import {PortalRootDom} from './root/root';
 import '../public-path';
 
-
 function renderPortalRoot() {
     ReactDOM.render(<PortalRootDom />, document.getElementById('portal-root'));
 }
@@ -22,7 +21,6 @@ export async function bootstrap() {
  * 每次加載進子專案都會 call mount, 一般 render 也會在這邊 call
  */
 export async function mount(props) {
-    console.log(props);
     renderPortalRoot();
 }
 /**

@@ -2,10 +2,13 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 // const CompressionPlugin = require('compression-webpack-plugin');
 // const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const packageName = require('./package.json').name;
 
 module.exports = {
     output: {
-        library: 'sub-app-portal',
+        library: `${packageName}-[name]`,
+        libraryTarget: 'umd',
+        jsonpFunction: `webpackJsonp_${packageName}`,
     },
     module: {
         rules: [
