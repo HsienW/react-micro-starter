@@ -3,8 +3,9 @@ import ReactDOM from 'react-dom';
 import {PortalRootDom} from './root/root';
 import '../public-path';
 
-function renderPortalRoot() {
-    ReactDOM.render(<PortalRootDom />, document.getElementById('portal-root'));
+function renderPortalRoot(props) {
+    const { container, routerBase } = props;
+    ReactDOM.render(<PortalRootDom routerBase = {routerBase}/>, container ? container.querySelector('#portal-root') : document.querySelector('#portal-root'));
 }
 
 if (!window.__POWERED_BY_QIANKUN__) {
@@ -21,7 +22,7 @@ export async function bootstrap() {
  * 每次加載進子專案都會 call mount, 一般 render 也會在這邊 call
  */
 export async function mount(props) {
-    renderPortalRoot();
+    renderPortalRoot(props);
 }
 /**
  * 每次切換 or 卸載進子專案都會 call unmount, 一般會在這裡銷毀子專案的 instance
