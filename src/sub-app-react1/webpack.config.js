@@ -1,11 +1,14 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CompressionPlugin = require('compression-webpack-plugin');
-const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
+// const CompressionPlugin = require('compression-webpack-plugin');
+// const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const packageName = require('./package.json').name;
 
 module.exports = {
     output: {
-        library: 'sub-app-react1',
+        library: `${packageName}-[name]`,
+        libraryTarget: 'umd',
+        jsonpFunction: `webpackJsonp_${packageName}`,
     },
     module: {
         rules: [
@@ -68,12 +71,12 @@ module.exports = {
             template: 'src/index.html',
             filename: 'index.html',
         }),
-        new CompressionPlugin(
-            {
-                test: /\.js(\?.*)?$/i
-            }
-        ),
-        new MomentLocalesPlugin(),
+        // new CompressionPlugin(
+        //     {
+        //         test: /\.js(\?.*)?$/i
+        //     }
+        // ),
+        // new MomentLocalesPlugin(),
         // new BundleAnalyzerPlugin()
     ],
 };

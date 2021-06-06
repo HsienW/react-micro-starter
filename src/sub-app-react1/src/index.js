@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import {React1RootDom} from './root/root';
 import '../public-path';
 
-
 function renderReact1Root() {
     ReactDOM.render(<React1RootDom />, document.getElementById('react1-root'));
 }
@@ -22,6 +21,7 @@ export async function bootstrap() {
  * 每次加載進子專案都會 call mount, 一般 render 也會在這邊 call
  */
 export async function mount(props) {
+    console.log('我是 renderReact1Root');
     console.log(props);
     renderReact1Root();
 }
