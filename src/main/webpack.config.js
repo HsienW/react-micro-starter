@@ -1,42 +1,52 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
-// const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
-module.exports = {
+const path = require('path');
+const baseWebpackConfig = require('../common/webpack/webpack.config.base');
+const {merge} = require('webpack-merge');
+
+const isDev = process.env.NODE_ENV === 'development';
+
+module.exports = merge(baseWebpackConfig, {
     module: {
         rules: [
             {
                 test: /\.(jsx|js)?$/,
-                exclude: /node_modules/,
-                use: 'babel-loader'
+                include: [path.resolve(__dirname, 'src')],
+                // 跟 plugins 中的設定對應
+                use: ['cache-loader', 'babel-loader']
             },
             {
-                test: /\.(css|scss)$/,
+                test: /\.(sc|c)ss$/,
                 use: [
-                    'style-loader',
-                    'css-loader',
-                    'postcss-loader',
-                    'sass-loader'
-                ]
-            },
-            {
-                test: /\.(less)$/,
-                use: [
-                    'style-loader',
-                    'css-loader',
-                    'postcss-loader',
+                    'cache-loader',
                     {
-                        loader: 'less-loader',
+                        loader: MiniCssExtractPlugin.loader,
                         options: {
-                            javascriptEnabled: true
+                            hmr: isDev,
+                            reloadAll: true,
+                        }
+                    },
+                    'css-loader', {
+                        loader: 'postcss-loader'
+                    }, 'sass-loader'],
+                include: [path.resolve(__dirname, 'src')],
+            },
+            {
+                test: /\.(png|jpg|gif|jpeg|webp|svg|eot|ttf|woff|woff2)$/,
+                use: [
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 10240, // size 大於 10K 就轉成使用 asset, 小於的話就轉成 64 base
+                            // esModule: false,
+                            name: '[name]_[hash:6].[ext]'
                         }
                     }
-                ]
-            },
-            {
-                test: /\.(png|jpg|gif|svg|mp4|wmv)$/,
-                loader: 'file-loader'
+                ],
+                include: [path.resolve(__dirname, 'src')],
             },
         ]
     },
@@ -46,11 +56,6 @@ module.exports = {
             '.json',
             '.jsx'
         ]
-    },
-    optimization: {
-        splitChunks: {
-            chunks: 'all'
-        }
     },
     devServer: {
         port: '3000',
@@ -70,4 +75,4 @@ module.exports = {
         // new MomentLocalesPlugin(),
         // new BundleAnalyzerPlugin()
     ],
-};
+});

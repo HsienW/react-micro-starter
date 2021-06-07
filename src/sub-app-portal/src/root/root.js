@@ -9,12 +9,22 @@ const Demo = () => {
     return <h2>Portal Demo</h2>;
 };
 
+const click = (handler) => {
+    return handler( {
+        init: 'change'
+    });
+};
+
 export const PortalRootDom = (props) => {
-    const { routerBase } = props;
+    const { routerBase, getGlobalState, setGlobalState } = props;
+
+    console.log(getGlobalState('init'));
 
     return (
         <div>
             <h2>Portal root dom is working!</h2>
+            <div>test: {getGlobalState('init')}</div>
+            <button onClick={() => {click(setGlobalState);}}>test</button>
             <Router>
                 <div>
                     <nav>
