@@ -1,16 +1,22 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
-// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const path = require('path');
 const baseWebpackConfig = require('../common/webpack/webpack.config.base');
 const { merge } = require('webpack-merge');
 
 const isDev = process.env.NODE_ENV === 'development';
+const packageName = require('./package.json').name;
 
 module.exports = merge(baseWebpackConfig, {
-    mode: 'development',
+    mode: 'production',
+    output: {
+        library: `${packageName}-[name]`,
+        libraryTarget: 'umd',
+        jsonpFunction: `webpackJsonp_${packageName}`,
+    },
     module: {
         rules: [
             {
@@ -52,11 +58,6 @@ module.exports = merge(baseWebpackConfig, {
             }
         ]
     },
-    devServer: {
-        port: '3000',
-        compress: true,
-        hot: true
-    },
     plugins: [
         new HtmlWebpackPlugin({
             template: 'src/index.html',
@@ -68,6 +69,6 @@ module.exports = merge(baseWebpackConfig, {
         new Dotenv({
             path: isDev ? './.env.config.dev' : './.env.config.prod'
         }),
-        // new BundleAnalyzerPlugin()
+        new MomentLocalesPlugin()
     ]
 });

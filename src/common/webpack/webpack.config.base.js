@@ -55,4 +55,12 @@ module.exports = {
             name: 'manifest'
         }
     },
+    resolve: {
+        // 嘗試按順序解析這些後綴名, 如果有多個文件有相同的名字, 但後綴名不同先找 .js
+        extensions: [
+            '.js',
+            '.json',
+            '.jsx'
+        ]
+    }
 }
