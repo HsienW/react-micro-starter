@@ -1,7 +1,4 @@
 module.exports = {
-    output: {
-        filename: 'bundle.[hash:6].js',
-    },
     optimization: {
         // 套件 & common 的 code 拆分成 chunk
         concatenateModules: false,

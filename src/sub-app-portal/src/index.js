@@ -5,8 +5,6 @@ import '../public-path';
 
 function renderPortalRoot(props) {
     const { container, routerBase, getGlobalState, setGlobalState } = props;
-    console.log('查看查看查看查看查看');
-    console.log(props);
     ReactDOM.render(
         <PortalRootDom routerBase={routerBase} getGlobalState={getGlobalState} setGlobalState={setGlobalState} />,
         container ? container.querySelector('#portal-root') : document.querySelector('#portal-root')
