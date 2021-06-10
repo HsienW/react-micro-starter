@@ -1,12 +1,14 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
-// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-const {CleanWebpackPlugin} = require('clean-webpack-plugin');
-const path = require('path');
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 const baseWebpackConfig = require('../common/webpack/webpack.config.base');
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { merge } = require('webpack-merge');
+const path = require('path');
 
 const isDev = process.env.NODE_ENV === 'development';
 const packageName = require('./package.json').name;
@@ -78,6 +80,8 @@ module.exports = merge(baseWebpackConfig, {
         new Dotenv({
             path: isDev ? './.env.config.dev' : './.env.config.prod'
         }),
+        new HardSourceWebpackPlugin(),
+        new MomentLocalesPlugin(),
         new CleanWebpackPlugin()
         // new BundleAnalyzerPlugin()
     ]
