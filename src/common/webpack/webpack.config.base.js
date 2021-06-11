@@ -6,10 +6,19 @@ module.exports = {
             maxInitialRequests: 6,
             // cacheGroups 用途是定義 chunks 所屬的 cache 組
             cacheGroups: {
+                // 拆分 react 核心
+                reactDll: {
+                    name: 'react-dll',
+                    priority: 3, // 權重要大於 vendor & 其他套件
+                    test: (module) => {
+                        return /react|react-dom|prop-types/.test(module.context);
+                    },
+                    chunks: 'initial',
+                },
                 // 拆分第三方套件
                 vendor: {
-                    priority: 1, // 設定優先級, 首先抽出第三方套件
                     name: 'vendor',
+                    priority: 1, // 設定優先級, 首先抽出第三方套件
                     test: /[\\/]node_modules[\\/]/,
                     chunks: 'initial',
                     enforce: true,
@@ -35,7 +44,6 @@ module.exports = {
                         return /uuid/.test(module.context);
                     },
                     chunks: 'initial',
-                    minSize: 10, // size 超過 10 byte 的都算
                     minChunks: 1 // 拆分條件是, 在 src 中最少 import 了1次的都拆
                 },
                 // 拆分 common code 成暫存, 避免重複打包

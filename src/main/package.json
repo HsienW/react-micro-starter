@@ -13,6 +13,7 @@
   "author": "Hsien W Wei",
   "license": "ISC",
   "dependencies": {
+    "prop-types": "15.7.2",
     "qiankun": "2.4.2",
     "react": "16.13.1",
     "react-dom": "16.13.1"
@@ -22,6 +23,7 @@
     "@babel/plugin-transform-runtime": "7.9.6",
     "@babel/preset-env": "7.9.5",
     "@babel/preset-react": "7.9.4",
+    "@types/prop-types": "15.7.3",
     "babel-eslint": "10.1.0",
     "babel-loader": "8.1.0",
     "cache-loader": "4.1.0",
