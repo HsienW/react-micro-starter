@@ -56,7 +56,7 @@
     "husky": "6.0.0",
     "jest": "25.4.0",
     "less-loader": "5.0.0",
-    "mini-css-extract-plugin": "1.6.0",
+    "mini-css-extract-plugin": "0.11.3",
     "moment-locales-webpack-plugin": "1.2.0",
     "node-sass": "4.13.1",
     "postcss-loader": "3.0.0",
