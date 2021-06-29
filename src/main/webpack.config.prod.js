@@ -66,6 +66,9 @@ module.exports = merge(baseWebpackConfig, {
             template: 'src/index.html',
             filename: 'index.html'
         }),
+        new MiniCssExtractPlugin({
+            filename: '[name].css'
+        }),
         new CompressionPlugin({
             test: /\.js(\?.*)?$/i
         }),
