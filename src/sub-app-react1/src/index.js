@@ -4,8 +4,8 @@ import {React1RootDom} from './root/root';
 import '../public-path';
 
 function renderReact1Root(props) {
-    const { container, routerBase } = props;
-    ReactDOM.render(<React1RootDom routerBase = {routerBase}/>, container ? container.querySelector('#react1-root') : document.querySelector('#react1-root'));
+    const { container, routerBase, getGlobalState } = props;
+    ReactDOM.render(<React1RootDom routerBase = {routerBase} getGlobalState={getGlobalState}/>, container ? container.querySelector('#react1-root') : document.querySelector('#react1-root'));
 }
 
 if (!window.__POWERED_BY_QIANKUN__) {
