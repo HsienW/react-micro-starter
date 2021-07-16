@@ -10,7 +10,9 @@ const Demo = () => {
 };
 
 export const React1RootDom = (props) => {
-    const { routerBase } = props;
+    const { routerBase, getGlobalState } = props;
+
+    console.log(getGlobalState('init'));
 
     return (
         <div>

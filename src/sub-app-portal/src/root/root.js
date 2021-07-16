@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import './root.scss';
 
@@ -10,22 +10,23 @@ const Demo = () => {
     return <h2>Portal Demo</h2>;
 };
 
-const click = (handler) => {
-    return handler( {
-        init: 'change'
-    });
-};
-
 export const PortalRootDom = (props) => {
     const { routerBase, getGlobalState, setGlobalState } = props;
+    const defaultValue = getGlobalState('init');
+    const [testValue, changeValue] = useState(defaultValue);
 
-    console.log(getGlobalState('init'));
+    const click = (handler) => {
+        const newValue = Math.floor(Math.random() * 9) + 1;
+        changeValue(newValue);
+        console.log(getGlobalState('init'));
+        return handler({ init: newValue });
+    };
 
     return (
         <div>
             <h2 className='portal-root-title'>Portal root dom is working!</h2>
-            <div>test: {getGlobalState('init')}</div>
-            <button onClick={() => {click(setGlobalState);}}>test</button>
+            <div>test: {testValue}</div>
+            <button onClick={() => click(setGlobalState)}>test</button>
             <Router>
                 <div>
                     <nav>
