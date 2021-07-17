@@ -1,18 +1,33 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { singleAppGlobalState } from '../../common/state/single-app-global-state';
 import { PortalRootDom } from './root/root';
 import '../public-path';
 
 function renderPortalRoot(props) {
-    const { container, routerBase, getGlobalState, setGlobalState } = props;
+    const { container, routerBase, setGlobalState, getGlobalState, onStateChange } = props;
     ReactDOM.render(
-        <PortalRootDom routerBase={routerBase} getGlobalState={getGlobalState} setGlobalState={setGlobalState} />,
+        <PortalRootDom
+            routerBase={routerBase}
+            setGlobalState={setGlobalState}
+            getGlobalState={getGlobalState}
+            onStateChange={onStateChange}
+        />,
         container ? container.querySelector('#portal-root') : document.querySelector('#portal-root')
     );
 }
 
 if (!window.__POWERED_BY_QIANKUN__) {
-    renderPortalRoot();
+
+    console.log('portal 我自己運行了');
+
+    const routerBase = '/sub-app-portal';
+    const { getGlobalState, setGlobalState } = singleAppGlobalState;
+    const props = {routerBase, getGlobalState, setGlobalState};
+
+    singleAppGlobalState.setGlobalState('init', 'portal 我自己運行了');
+
+    renderPortalRoot(props);
 }
 
 /**
