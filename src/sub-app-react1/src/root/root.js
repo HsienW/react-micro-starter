@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 const Home = () => {
@@ -10,13 +10,24 @@ const Demo = () => {
 };
 
 export const React1RootDom = (props) => {
-    const { routerBase, getGlobalState } = props;
+    const { routerBase, setGlobalState, getGlobalState } = props;
+    const defaultValue = getGlobalState('init');
+    const [testValue, changeValue] = useState(defaultValue);
+
+    const click = (handler) => {
+        const newValue = Math.floor(Math.random() * 5) + 1;
+        changeValue(newValue);
+        console.log(getGlobalState('init'));
+        return handler({ init: newValue });
+    };
 
     console.log(getGlobalState('init'));
 
     return (
         <div>
             <h2>React1 root dom is working!</h2>
+            <div>test: {testValue}</div>
+            <button onClick={() => click(setGlobalState)}>test</button>
             <Router>
                 <div>
                     <nav>

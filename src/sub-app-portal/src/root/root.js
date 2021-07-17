@@ -11,7 +11,7 @@ const Demo = () => {
 };
 
 export const PortalRootDom = (props) => {
-    const { routerBase, getGlobalState, setGlobalState } = props;
+    const { routerBase, setGlobalState, getGlobalState } = props;
     const defaultValue = getGlobalState('init');
     const [testValue, changeValue] = useState(defaultValue);
 
