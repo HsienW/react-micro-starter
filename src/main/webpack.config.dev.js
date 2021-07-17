@@ -63,7 +63,8 @@ module.exports = merge(baseWebpackConfig, {
     devServer: {
         port: '3000',
         compress: true,
-        hot: true
+        hot: true,
+        historyApiFallback: true
     },
     plugins: [
         new HtmlWebpackPlugin({
