@@ -65,6 +65,7 @@ module.exports = merge(baseWebpackConfig, {
         port: '3002',
         compress: true,
         hot: true,
+        historyApiFallback: true,
         headers: {
             'Access-Control-Allow-Origin': '*'
         }
