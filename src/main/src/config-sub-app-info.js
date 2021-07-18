@@ -1,12 +1,12 @@
 const subAppInfo = [
     {
         name: 'sub-app-portal',
-        entry: '//localhost:3001',
+        entry: process.env.REACT_APP_PORTAL_ENV,
         activeRule: '/sub-app-portal'
     },
     {
         name: 'sub-app-react1',
-        entry: '//localhost:3002',
+        entry: process.env.REACT_APP_REACT1_ENV,
         activeRule: '/sub-app-react1'
     }
 ];
@@ -14,3 +14,4 @@ const subAppInfo = [
 export {
     subAppInfo
 };
+

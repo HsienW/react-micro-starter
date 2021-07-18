@@ -82,7 +82,8 @@ module.exports = merge(baseWebpackConfig, {
             test: /\.js(\?.*)?$/i
         }),
         new Dotenv({
-            path: isDev ? './.env.config.dev' : './.env.config.prod'
+            path: './.env.config.dev',
+            systemvars: true
         }),
         new HardSourceWebpackPlugin(),
         new MomentLocalesPlugin(),
