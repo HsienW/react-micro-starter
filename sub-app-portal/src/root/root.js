@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import React, {useState} from 'react';
+import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
+import '../../../common/components/auth/auth';
 import './root.scss';
 
 const Home = () => {
@@ -11,7 +12,7 @@ const Demo = () => {
 };
 
 export const PortalRootDom = (props) => {
-    const { routerBase, setGlobalState, getGlobalState } = props;
+    const {routerBase, setGlobalState, getGlobalState} = props;
     const defaultValue = getGlobalState('init');
     const [testValue, changeValue] = useState(defaultValue);
 
@@ -19,7 +20,7 @@ export const PortalRootDom = (props) => {
         const newValue = Math.floor(Math.random() * 9) + 1;
         changeValue(newValue);
         console.log(getGlobalState('init'));
-        return handler({ init: newValue });
+        return handler({init: newValue});
     };
 
     return (
@@ -27,6 +28,7 @@ export const PortalRootDom = (props) => {
             <h2 className='portal-root-title'>Portal root dom is working!</h2>
             <div>test: {testValue}</div>
             <button onClick={() => click(setGlobalState)}>test</button>
+            <auth-component></auth-component>
             <Router>
                 <div>
                     <nav>
@@ -44,10 +46,10 @@ export const PortalRootDom = (props) => {
                     </nav>
                     <Switch>
                         <Route path={`${routerBase}/home`}>
-                            <Home />
+                            <Home/>
                         </Route>
                         <Route path={`${routerBase}/demo`}>
-                            <Demo />
+                            <Demo/>
                         </Route>
                     </Switch>
                 </div>
