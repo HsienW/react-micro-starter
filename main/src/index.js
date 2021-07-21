@@ -23,5 +23,5 @@ registerMicroApps(
     }
 );
 
-setDefaultMountApp('/sub-app-portal');
+setDefaultMountApp('/sub-app-portal/login');
 start();

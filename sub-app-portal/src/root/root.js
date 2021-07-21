@@ -3,6 +3,10 @@ import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
 import '../../../common/components/auth/auth';
 import './root.scss';
 
+const Login = () => {
+    return <auth-component/>;
+};
+
 const Home = () => {
     return <h2>Portal Home</h2>;
 };
@@ -28,11 +32,13 @@ export const PortalRootDom = (props) => {
             <h2 className='portal-root-title'>Portal root dom is working!</h2>
             <div>test: {testValue}</div>
             <button onClick={() => click(setGlobalState)}>test</button>
-            <auth-component></auth-component>
             <Router>
                 <div>
                     <nav>
                         <ul>
+                            <li>
+                                <Link to={`${routerBase}/login`}>Login</Link>
+                            </li>
                             <li>
                                 <Link to={`${routerBase}/home`}>Home</Link>
                             </li>
@@ -45,6 +51,9 @@ export const PortalRootDom = (props) => {
                         </ul>
                     </nav>
                     <Switch>
+                        <Route path={`${routerBase}/login`}>
+                            <Login/>
+                        </Route>
                         <Route path={`${routerBase}/home`}>
                             <Home/>
                         </Route>
