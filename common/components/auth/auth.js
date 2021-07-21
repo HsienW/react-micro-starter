@@ -2,29 +2,40 @@ class Auth extends HTMLElement {
     constructor() {
         super();
         this.shadow = this.attachShadow({mode: 'open'});
-        this.domRender();
         this.domStyling();
-        this.domInitEvent();
+        this.domRender();
+        this.domEventInit();
     }
 
     domStyling() {
         let style = document.createElement('style');
         style.textContent = `
-         .auth-page {
-            width: 360px;
+        .auth-backdrop {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 4;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(51, 51, 51, 0.8);
+        }
+        .auth-page {
+            width: 420px;
             padding: 8% 0 0;
             margin: auto;
+            z-index: 99;
         }
         .form {
+            font-family: "Roboto", sans-serif;
             position: relative;
             z-index: 1;
             background: #FFFFFF;
-            max-width: 360px;
+            max-width: 420px;
             margin: 0 auto 0;
             padding: 45px;
             text-align: center;
             box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
-            border-radius: 2px
+            border-radius: 4px
         }
         .input {
             font-family: "Roboto", sans-serif;
@@ -36,10 +47,9 @@ class Auth extends HTMLElement {
             padding: 10px 15px;
             box-sizing: border-box;
             font-size: 0.75rem;
-            border-radius: 2px
+            border-radius: 4px
         }
         .button {
-            font-family: "Roboto", sans-serif;
             text-transform: uppercase;
             outline: 0;
             background: #1890ff;
@@ -51,15 +61,16 @@ class Auth extends HTMLElement {
             -webkit-transition: all 0.3 ease;
             transition: all 0.3 ease;
             cursor: pointer;
-            border-radius: 2px
+            border-radius: 4px
         }
         .form button:hover,.form button:active,.form button:focus {
             opacity: 0.8
         }
         .form .form-title {
             margin: 0 0 0.8rem 0;
-            color: #b3b3b3;
-            font-size: 1.5rem;
+            color: #333333;
+            font-size: 1.75rem;
+            font-weight: 700;
         }
         .form .form-sub-title {
             margin: 0.8rem; 0 0;
@@ -123,6 +134,7 @@ class Auth extends HTMLElement {
     }
 
     domRender() {
+        this.authBackdrop = document.createElement('div');
         this.authPage = document.createElement('div');
         this.authFormViewport = document.createElement('div');
         this.authFormTitle = document.createElement('div');
@@ -133,6 +145,7 @@ class Auth extends HTMLElement {
         this.authLoginButton = document.createElement('button');
         this.authDescription = document.createElement('p');
 
+        this.authBackdrop.className = 'auth-backdrop';
         this.authPage.className = 'auth-page';
         this.authFormViewport.className = 'form';
         this.authFormTitle.className = 'form-title';
@@ -142,9 +155,9 @@ class Auth extends HTMLElement {
         this.authLoginButton.className = 'button';
         this.authDescription.className = 'description';
         this.authLoginButton.innerHTML = 'Login';
-        this.authFormTitle.textContent = 'Music Player Demo'
+        this.authFormTitle.textContent = 'React Micro Starter'
         this.authFormSubtitle.textContent = 'You can enter any account and password!'
-        this.authDescription.textContent = 'This app only for practice demo,  non-commercial'
+        this.authDescription.textContent = 'This description'
 
         this.authInputAccount.setAttribute('type', 'text');
         this.authInputPassword.setAttribute('type', 'password');
@@ -155,7 +168,8 @@ class Auth extends HTMLElement {
         this.authInputAccount.setAttribute('id', 'input-account');
         this.authInputPassword.setAttribute('id', 'input-password');
 
-        this.shadow.appendChild(this.authPage);
+        this.shadow.appendChild(this.authBackdrop);
+        this.authBackdrop.appendChild(this.authPage);
         this.authPage.appendChild(this.authFormViewport);
         this.authFormViewport.appendChild(this.authForm);
         this.authForm.appendChild(this.authFormTitle);
@@ -166,7 +180,7 @@ class Auth extends HTMLElement {
         this.authForm.appendChild(this.authDescription);
     }
 
-    domInitEvent() {
+    domEventInit() {
         this.authInputAccount.addEventListener('input', (event) => {
             this.authInputAccount.textContent = event.target.value;
         }, false);
