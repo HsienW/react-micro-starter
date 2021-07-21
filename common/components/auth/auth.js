@@ -2,14 +2,15 @@ class Auth extends HTMLElement {
     constructor() {
         super();
         this.shadow = this.attachShadow({mode: 'open'});
-        this.render();
-        this.style();
+        this.domRender();
+        this.domStyling();
+        this.domInitEvent();
     }
 
-    style() {
+    domStyling() {
         let style = document.createElement('style');
         style.textContent = `
-         .login-page {
+         .auth-page {
             width: 360px;
             padding: 8% 0 0;
             margin: auto;
@@ -56,16 +57,21 @@ class Auth extends HTMLElement {
             opacity: 0.8
         }
         .form .form-title {
-            margin: 0 0 1.2rem 0;
+            margin: 0 0 0.8rem 0;
             color: #b3b3b3;
             font-size: 1.5rem;
         }
-        .form .message {
+        .form .form-sub-title {
+            margin: 0.8rem; 0 0;
+            color: #b3b3b3;
+            font-size: 0.85rem;
+        }
+        .form .description {
             margin: 0.8rem; 0 0;
             color: #b3b3b3;
             font-size: 0.75rem;
         }
-        .form .message a {
+        .form .description a {
             color: #4CAF50;
             text-decoration: none;
         }
@@ -116,41 +122,63 @@ class Auth extends HTMLElement {
         this.shadow.appendChild(style);
     }
 
-    render() {
+    domRender() {
         this.authPage = document.createElement('div');
         this.authFormViewport = document.createElement('div');
         this.authFormTitle = document.createElement('div');
-        this.authForm = document.createElement('form');
-        this.authInputUsername = document.createElement('input');
+        this.authFormSubtitle = document.createElement('p');
+        this.authForm = document.createElement('div');
+        this.authInputAccount = document.createElement('input');
         this.authInputPassword = document.createElement('input');
         this.authLoginButton = document.createElement('button');
         this.authDescription = document.createElement('p');
 
-        this.authPage.className = 'login-page';
+        this.authPage.className = 'auth-page';
         this.authFormViewport.className = 'form';
         this.authFormTitle.className = 'form-title';
-        this.authInputUsername.className = 'input';
+        this.authFormSubtitle.className = 'form-sub-title';
+        this.authInputAccount.className = 'input';
         this.authInputPassword.className = 'input';
         this.authLoginButton.className = 'button';
-        this.authDescription.className = 'message';
+        this.authDescription.className = 'description';
         this.authLoginButton.innerHTML = 'Login';
         this.authFormTitle.textContent = 'Music Player Demo'
+        this.authFormSubtitle.textContent = 'You can enter any account and password!'
         this.authDescription.textContent = 'This app only for practice demo,  non-commercial'
 
-        this.authInputUsername.setAttribute('type', 'text');
+        this.authInputAccount.setAttribute('type', 'text');
         this.authInputPassword.setAttribute('type', 'password');
 
-        this.authInputUsername.setAttribute('placeholder', 'username');
-        this.authInputPassword.setAttribute('placeholder', 'password');
+        this.authInputAccount.setAttribute('placeholder', 'Account');
+        this.authInputPassword.setAttribute('placeholder', 'Password');
+
+        this.authInputAccount.setAttribute('id', 'input-account');
+        this.authInputPassword.setAttribute('id', 'input-password');
 
         this.shadow.appendChild(this.authPage);
         this.authPage.appendChild(this.authFormViewport);
         this.authFormViewport.appendChild(this.authForm);
         this.authForm.appendChild(this.authFormTitle);
-        this.authForm.appendChild(this.authInputUsername);
+        this.authForm.appendChild(this.authFormSubtitle);
+        this.authForm.appendChild(this.authInputAccount);
         this.authForm.appendChild(this.authInputPassword);
         this.authForm.appendChild(this.authLoginButton);
         this.authForm.appendChild(this.authDescription);
+    }
+
+    domInitEvent() {
+        this.authInputAccount.addEventListener('input', (event) => {
+            this.authInputAccount.textContent = event.target.value;
+        }, false);
+        this.authInputPassword.addEventListener('input', (event) => {
+            this.authInputPassword.textContent = event.target.value;
+        }, false);
+        this.authLoginButton.addEventListener('click', this.login.bind(this.authForm), false);
+    }
+
+    login() {
+        console.log(this.querySelector('#input-account').value);
+        console.log(this.querySelector('#input-password').value);
     }
 }
 
