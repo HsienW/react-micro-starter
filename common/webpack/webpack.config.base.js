@@ -3,13 +3,13 @@ module.exports = {
         // 套件 & common 的 code 拆分成 chunk
         concatenateModules: false,
         splitChunks: {
-            maxInitialRequests: 6,
+            maxInitialRequests: 7,
             // cacheGroups 用途是定義 chunks 所屬的 cache 組
             cacheGroups: {
                 // 拆分 react 核心
                 reactDll: {
                     name: 'react-dll',
-                    priority: 5, // 權重要大於 vendor & 其他套件
+                    priority: 10, // 權重要大於 vendor & 其他套件
                     test: (module) => {
                         return /react|react-dom|prop-types/.test(module.context);
                     },
