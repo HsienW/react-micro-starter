@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { singleAppGlobalState } from '../../common/state/single-app-global-state';
 import { PortalRootDom } from './root/root';
-import '../public-path';
+import './public-path';
 
 function renderPortalRoot(props) {
     const { container, routerBase, setGlobalState, getGlobalState, onStateChange } = props;
