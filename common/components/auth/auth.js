@@ -193,6 +193,13 @@ class Auth extends HTMLElement {
     login() {
         console.log(this.querySelector('#input-account').value);
         console.log(this.querySelector('#input-password').value);
+        const account = this.querySelector('#input-account').value;
+        const userInfo = {
+            account: account ? account : 'default',
+            displayName: account ? account : 'default',
+            token: 'default-token'
+        };
+        sessionStorage.setItem('user-info', JSON.stringify(userInfo));
     }
 }
 
