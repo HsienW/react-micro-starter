@@ -1,3 +1,5 @@
+import {routeNavigation} from '../../util/route-navigation';
+
 class Auth extends HTMLElement {
     constructor() {
         super();
@@ -200,6 +202,7 @@ class Auth extends HTMLElement {
             token: 'default-token'
         };
         sessionStorage.setItem('user-info', JSON.stringify(userInfo));
+        routeNavigation('feature', '/portal-page1');
     }
 }
 
