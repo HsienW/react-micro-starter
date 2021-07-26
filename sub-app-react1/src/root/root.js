@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import {HashRouter, Switch, Route} from 'react-router-dom';
+import {routeNavigation} from '../../../common/util/route-navigation';
 
-const Home = () => {
-    return <h2>React1 Home</h2>;
+const React1Page1 = () => {
+    return <h2>React1 Page1</h2>;
 };
 
-const Demo = () => {
-    return <h2>React1 Demo</h2>;
+const React1Page2 = () => {
+    return <h2>React1 Page2</h2>;
 };
 
 export const React1RootDom = (props) => {
@@ -28,31 +29,27 @@ export const React1RootDom = (props) => {
             <h2>React1 root dom is working!</h2>
             <div>test: {testValue}</div>
             <button onClick={() => click(setGlobalState)}>test</button>
-            <Router>
-                <div>
-                    <nav>
-                        <ul>
-                            <li>
-                                <Link to={`${routerBase}/home`}>Home</Link>
-                            </li>
-                            <li>
-                                <Link to={`${routerBase}/demo`}>Demo</Link>
-                            </li>
-                            <li>
-                                <Link to={'/sub-app-portal'}>Back Portal</Link>
-                            </li>
-                        </ul>
-                    </nav>
-                    <Switch>
-                        <Route path={`${routerBase}/home`}>
-                            <Home />
-                        </Route>
-                        <Route path={`${routerBase}/demo`}>
-                            <Demo />
-                        </Route>
-                    </Switch>
-                </div>
-            </Router>
+            <HashRouter basename={routerBase}>
+                <ul>
+                    <li>
+                        <a onClick={() => {routeNavigation('feature', '/react1-page1');}}>React1 Page1</a>
+                    </li>
+                    <li>
+                        <a onClick={() => {routeNavigation('feature', '/react1-page2');}}>React1 Page2</a>
+                    </li>
+                    <li>
+                        <a onClick={() => {routeNavigation('sub-app', '/sub-app-portal');}}>To Portal</a>
+                    </li>
+                </ul>
+                <Switch>
+                    <Route path={'/react1-page1'}>
+                        <React1Page1/>
+                    </Route>
+                    <Route path={'/react1-page2'}>
+                        <React1Page2/>
+                    </Route>
+                </Switch>
+            </HashRouter>
         </div>
     );
 };
