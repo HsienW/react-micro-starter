@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {routeNavigation} from '../../common/util/route-navigation';
+// import {routeNavigation} from '../../common/util/route-navigation';
+import '../../common/components/side-bar/side-bar';
 
 function SubAppViewport(props) {
     const {loading} = props;
@@ -8,16 +9,7 @@ function SubAppViewport(props) {
     return (
         <div>
             {loading ? <h4>Loading...</h4> : null}
-            <nav>
-                <ul>
-                    <li>
-                        <a onClick={() => {routeNavigation('sub-app', '/sub-app-portal');}}>To Portal</a>
-                    </li>
-                    <li>
-                        <a onClick={() => {routeNavigation('sub-app', '/sub-app-react1');}}>To React1</a>
-                    </li>
-                </ul>
-            </nav>
+            <side-bar-component/>
             <div id='sub-app-viewport'/>
         </div>
     );
