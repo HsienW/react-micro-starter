@@ -1,4 +1,5 @@
 // import {routeNavigation} from '../../util/route-navigation';
+import {subAppInfo} from '../../../main/src/config-sub-app-info';
 
 class SideBar extends HTMLElement {
     constructor() {
@@ -7,7 +8,6 @@ class SideBar extends HTMLElement {
         this.domStyling();
         this.domRender();
         this.domEventInit();
-        this.domActiveStylingInit();
     }
 
     domStyling() {
@@ -116,6 +116,10 @@ class SideBar extends HTMLElement {
         this.sideBarPortalLink.textContent = 'Portal';
         this.sideBarReact1Link.textContent = 'React1';
 
+        this.sideBarUl.setAttribute('current-active', '');
+        this.sideBarPortalLi.setAttribute('active-rule', '/sub-app-portal');
+        this.sideBarReact1Li.setAttribute('active-rule', '/sub-app-react1');
+
         this.shadow.appendChild(this.sideBarBackdrop);
         this.sideBarBackdrop.appendChild(this.sideBarUl);
         this.sideBarUl.appendChild(this.sideBarPortalLi);
@@ -151,23 +155,44 @@ class SideBar extends HTMLElement {
 // });
 
     domEventInit() {
-        this.sideBarPortalLi.addEventListener('click', this.sideBarItemClick.bind(this.sideBarPortalLink), false);
-        this.sideBarReact1Li.addEventListener('click', this.sideBarItemClick.bind(this.sideBarReact1Link), false);
+        this.sideBarPortalLi.addEventListener('click', this.sideBarItemClick.bind(this.sideBarPortalLi, this.sideBarUl), false);
+        this.sideBarReact1Li.addEventListener('click', this.sideBarItemClick.bind(this.sideBarReact1Li), false);
     }
 
     sideBarItemClick() {
         console.log('測試測試測試測試測試測試測試測試');
+        console.log(this);
+        this.setAttribute('class', 'active');
+        let clickItemActive = this.getAttribute('active-rule');
+        let sideBarUl = Array.prototype.shift.call(arguments);
+        sideBarUl.setAttribute('current-active', clickItemActive);
+
+        console.log('999999999999999999999');
+        console.log(sideBarUl);
+    }
+
+    static get observedAttributes() {
+        return ['current-active'];
+    }
+
+    attributeChangedCallback(name, oldValue, newValue) {
+        console.log('dddddddddddddddddddddddddddd');
+        console.log(name);
+        console.log(oldValue);
+        console.log(newValue);
     }
 
     // console.log(this);
     // this.setAttribute('class', 'active');
 
-    domActiveStylingInit() {
-        this.sideBarUl.addEventListener('click', () => {
-            console.log(this);
-            // this.setAttribute('class', 'active');
-        }, false);
-    }
+    // domActiveStylingChange() {
+    //     console.log('cccccccccccccccccccccccc');
+    //     console.log(this.sideBarUl);
+    //     // this.sideBarUl.addEventListener('click', function () {
+    //     //     console.log('cccccccccccccccccccccccc');
+    //     //     console.log(this);
+    //     // }, false);
+    // }
 
 // <a onClick={() => {routeNavigation('sub-app', '/sub-app-portal');}}>To Portal</a>
 
