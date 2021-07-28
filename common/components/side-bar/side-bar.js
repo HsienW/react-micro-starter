@@ -1,5 +1,5 @@
-// import {routeNavigation} from '../../util/route-navigation';
-import {subAppInfo} from '../../../main/src/config-sub-app-info';
+import {routeNavigation} from '../../util/route-navigation';
+// import {subAppInfo} from '../../../main/src/config-sub-app-info';
 
 class SideBar extends HTMLElement {
     constructor() {
@@ -8,6 +8,7 @@ class SideBar extends HTMLElement {
         this.domStyling();
         this.domRender();
         this.domEventInit();
+        // this.changeActive = this.changeActive.bind(this);
     }
 
     domStyling() {
@@ -116,9 +117,13 @@ class SideBar extends HTMLElement {
         this.sideBarPortalLink.textContent = 'Portal';
         this.sideBarReact1Link.textContent = 'React1';
 
-        this.sideBarUl.setAttribute('current-active', '');
+        this.sideBarUl.setAttribute('id', 'side-bar');
+
         this.sideBarPortalLi.setAttribute('active-rule', '/sub-app-portal');
         this.sideBarReact1Li.setAttribute('active-rule', '/sub-app-react1');
+
+        this.sideBarPortalLink.setAttribute('active-rule', '/sub-app-portal');
+        this.sideBarReact1Link.setAttribute('active-rule', '/sub-app-react1');
 
         this.shadow.appendChild(this.sideBarBackdrop);
         this.sideBarBackdrop.appendChild(this.sideBarUl);
@@ -128,74 +133,25 @@ class SideBar extends HTMLElement {
         this.sideBarReact1Li.appendChild(this.sideBarReact1Link);
     }
 
-
-    // $(document).ready(function() {
-// 	$("#accordian a").click(function() {
-// 		var link = $(this);
-// 		var closest_ul = link.closest("ul");
-// 		var parallel_active_links = closest_ul.find(".active")
-// 		var closest_li = link.closest("li");
-// 		var link_status = closest_li.hasClass("active");
-// 		var count = 0;
-
-// 		closest_ul.find("ul").slideUp(function() {
-// 			if (++count == closest_ul.find("ul").length){
-// 				parallel_active_links.removeClass("active");
-// 				parallel_active_links.children("ul").removeClass("show-dropdown");
-// 				link.not().children("ul").removeClass(".active");
-// 			}
-// 		});
-
-// 		if (!link_status) {
-// 				closest_li.children("ul").slideDown().addClass("show-dropdown");
-// 				closest_li.addClass("active");
-// 		}
-
-// 	})
-// });
-
     domEventInit() {
-        this.sideBarPortalLi.addEventListener('click', this.sideBarItemClick.bind(this.sideBarPortalLi, this.sideBarUl), false);
-        this.sideBarReact1Li.addEventListener('click', this.sideBarItemClick.bind(this.sideBarReact1Li), false);
+        window.addEventListener('popstate', this.activeChangeStyling.bind(this), false);
+        this.sideBarUl.addEventListener('click', this.sideBarItemClick.bind(this), false);
     }
 
-    sideBarItemClick() {
-        console.log('測試測試測試測試測試測試測試測試');
-        console.log(this);
-        this.setAttribute('class', 'active');
-        let clickItemActive = this.getAttribute('active-rule');
-        let sideBarUl = Array.prototype.shift.call(arguments);
-        sideBarUl.setAttribute('current-active', clickItemActive);
-
-        console.log('999999999999999999999');
-        console.log(sideBarUl);
+    sideBarItemClick(event) {
+        let targetActive = event.target.getAttribute('active-rule')
+        routeNavigation('sub-app', targetActive);
     }
 
-    static get observedAttributes() {
-        return ['current-active'];
+    activeChangeStyling() {
+        for (let i = 0; i < this.sideBarUl.childNodes.length; i++) {
+            this.sideBarUl.childNodes[i].removeAttribute('class');
+
+            if (this.sideBarUl.childNodes[i].getAttribute('active-rule') === location.pathname) {
+                this.sideBarUl.childNodes[i].setAttribute('class', 'active');
+            }
+        }
     }
-
-    attributeChangedCallback(name, oldValue, newValue) {
-        console.log('dddddddddddddddddddddddddddd');
-        console.log(name);
-        console.log(oldValue);
-        console.log(newValue);
-    }
-
-    // console.log(this);
-    // this.setAttribute('class', 'active');
-
-    // domActiveStylingChange() {
-    //     console.log('cccccccccccccccccccccccc');
-    //     console.log(this.sideBarUl);
-    //     // this.sideBarUl.addEventListener('click', function () {
-    //     //     console.log('cccccccccccccccccccccccc');
-    //     //     console.log(this);
-    //     // }, false);
-    // }
-
-// <a onClick={() => {routeNavigation('sub-app', '/sub-app-portal');}}>To Portal</a>
-
 }
 
 customElements.define('side-bar-component', SideBar);
