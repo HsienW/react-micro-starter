@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import {routeNavigation} from '../../common/util/route-navigation';
 import '../../common/components/side-bar/side-bar';
 
 function SubAppViewport(props) {
@@ -22,5 +21,4 @@ function configSubAppRender({loading}) {
 
 export {
     configSubAppRender,
-    // listenRouterChange
 };

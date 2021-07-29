@@ -1,4 +1,5 @@
 import {routeNavigation} from '../../util/route-navigation';
+import {pubSub} from '../../pub-sub/pub-sub';
 // import {subAppInfo} from '../../../main/src/config-sub-app-info';
 
 class SideBar extends HTMLElement {
@@ -8,7 +9,8 @@ class SideBar extends HTMLElement {
         this.domStyling();
         this.domRender();
         this.domEventInit();
-        // this.changeActive = this.changeActive.bind(this);
+        pubSub.doSubscribe('onload', this.activeChangeStyling.bind(this));
+        pubSub.doSubscribe('route-change', this.activeChangeStyling.bind(this));
     }
 
     domStyling() {
@@ -134,7 +136,6 @@ class SideBar extends HTMLElement {
     }
 
     domEventInit() {
-        window.addEventListener('popstate', this.activeChangeStyling.bind(this), false);
         this.sideBarUl.addEventListener('click', this.sideBarItemClick.bind(this), false);
     }
 
