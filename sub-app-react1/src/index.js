@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { singleAppGlobalState } from '../../common/state/single-app-global-state';
+import { globalActiveListener } from '../../common/listener/global-active-listener';
 import { React1RootDom } from './root/root';
 import './public-path';
 
@@ -24,6 +25,7 @@ if (!window.__POWERED_BY_QIANKUN__) {
     const props = { routerBase, getGlobalState, setGlobalState };
 
     singleAppGlobalState.setGlobalState('init', 'react1 我自己運行了');
+    globalActiveListener.initAllAction();
 
     renderReact1Root(props);
 }

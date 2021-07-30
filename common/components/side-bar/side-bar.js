@@ -28,6 +28,7 @@ class SideBar extends HTMLElement {
             margin-right: 10px;
         }
         .side-bar li {
+            cursor:pointer;
             list-style-type: none;
         }
         .side-bar ul li a {
@@ -79,7 +80,7 @@ class SideBar extends HTMLElement {
             padding-right: 3px;
             vertical-align: middle;
             font-weight: 900;
-            transition: 0.5s;
+            transition: 0.15s;
         }
         .side-bar .active>a:not(:only-child):after {
             transform: rotate(90deg);
@@ -95,11 +96,11 @@ class SideBar extends HTMLElement {
         .side-bar::-webkit-scrollbar-thumb {
             background: #0089ff;
             border-radius: 10px;
-            transition: 0.5s;
+            transition: 0.15s;
         }
         .side-bar::-webkit-scrollbar-thumb:hover {
             background: #d5b14c;
-            transition: 0.5s;
+            transition: 0.15s;
         }
     `
         this.shadow.appendChild(style);
@@ -140,7 +141,7 @@ class SideBar extends HTMLElement {
     }
 
     sideBarItemClick(event) {
-        let targetActive = event.target.getAttribute('active-rule')
+        let targetActive = event.target.getAttribute('active-rule');
         routeNavigation('sub-app', targetActive);
     }
 

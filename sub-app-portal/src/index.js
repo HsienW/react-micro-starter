@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { singleAppGlobalState } from '../../common/state/single-app-global-state';
+import { globalActiveListener } from '../../common/listener/global-active-listener';
 import { PortalRootDom } from './root/root';
-// import { listenRouterChange } from '../../main/src/config-sub-app-render';
 import './public-path';
 
 function renderPortalRoot(props) {
@@ -27,6 +27,7 @@ if (!window.__POWERED_BY_QIANKUN__) {
     const props = {routerBase, getGlobalState, setGlobalState};
 
     singleAppGlobalState.setGlobalState('init', 'portal 我自己運行了');
+    globalActiveListener.initAllAction();
 
     renderPortalRoot(props);
 }
@@ -44,7 +45,6 @@ export async function bootstrap() {
  */
 export async function mount(props) {
     renderPortalRoot(props);
-    // listenRouterChange();
 }
 
 /**
