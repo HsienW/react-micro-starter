@@ -8,7 +8,6 @@ function SubAppViewport(props) {
     return (
         <div>
             {loading ? <h4>Loading...</h4> : null}
-            <side-bar-component/>
             <div id='sub-app-viewport'/>
         </div>
     );
