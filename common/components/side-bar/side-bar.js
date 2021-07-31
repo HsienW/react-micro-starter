@@ -22,6 +22,7 @@ class SideBar extends HTMLElement {
             height: 100%;
             overflow-x: hidden;
             border-right: 1px solid #d9d9d9;
+            font-family: "Roboto", sans-serif;
         }
         .side-bar ul {
             padding: 10px;
@@ -75,8 +76,7 @@ class SideBar extends HTMLElement {
             position: absolute;
             right: 20px;
             top: 14px;
-            font-size: 15px;
-            font-family: "Roboto", sans-serif;
+            font-size: 14px;
             display: inline-block;
             padding-right: 3px;
             vertical-align: middle;

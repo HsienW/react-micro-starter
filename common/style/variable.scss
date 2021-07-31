@@ -14,12 +14,29 @@ $disabled-color: rgba(0, 0, 0, 0.25); // 禁用色
 $border-color-base: #d9d9d9; // 邊框色
 
 // Font
+$font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI', Roboto,
+    'Helvetica Neue',
+    Arial,
+    'Noto Sans',
+    sans-serif,
+    'Apple Color Emoji',
+    'Segoe UI Emoji',
+    'Segoe UI Symbol',
+    'Noto Color Emoji';
+
 $font-size-base: 14px;
 $font-size-s: 16px;
 $font-size-m: 20px;
 $font-size-l: 25px;
 $font-size-xl: 30px;
 $font-size-2xl: 38px;
+$font-weight-m: 400;
+$font-weight-l: 500;
+$font-weight-xl: 600;
+$font-weight-2xl: 700;
 
 // Line Height
 $line-height-base: 22px;
