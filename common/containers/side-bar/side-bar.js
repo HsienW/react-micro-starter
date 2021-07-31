@@ -108,14 +108,14 @@ class SideBar extends HTMLElement {
     }
 
     domRender() {
-        this.sideBarBackdrop = document.createElement('div');
+        this.sideBarBody = document.createElement('div');
         this.sideBarUl = document.createElement('ul');
         this.sideBarPortalLi = document.createElement('li');
         this.sideBarReact1Li = document.createElement('li');
         this.sideBarPortalLink = document.createElement('a');
         this.sideBarReact1Link = document.createElement('a');
 
-        this.sideBarBackdrop.className = 'side-bar';
+        this.sideBarBody.className = 'side-bar';
         this.sideBarUl.className = 'side-bar-menu';
 
         this.sideBarPortalLink.textContent = 'Portal';
@@ -129,8 +129,8 @@ class SideBar extends HTMLElement {
         this.sideBarPortalLink.setAttribute('active-rule', '/sub-app-portal');
         this.sideBarReact1Link.setAttribute('active-rule', '/sub-app-react1');
 
-        this.shadow.appendChild(this.sideBarBackdrop);
-        this.sideBarBackdrop.appendChild(this.sideBarUl);
+        this.shadow.appendChild(this.sideBarBody);
+        this.sideBarBody.appendChild(this.sideBarUl);
         this.sideBarUl.appendChild(this.sideBarPortalLi);
         this.sideBarUl.appendChild(this.sideBarReact1Li);
         this.sideBarPortalLi.appendChild(this.sideBarPortalLink);
@@ -157,7 +157,7 @@ class SideBar extends HTMLElement {
     }
 }
 
-customElements.define('side-bar-component', SideBar);
+customElements.define('side-bar-container', SideBar);
 
 export {
     SideBar

@@ -126,7 +126,7 @@ class Auth extends HTMLElement {
     }
 
     domRender() {
-        this.authBackdrop = document.createElement('div');
+        this.authBody = document.createElement('div');
         this.authPage = document.createElement('div');
         this.authFormViewport = document.createElement('div');
         this.authFormTitle = document.createElement('div');
@@ -137,7 +137,7 @@ class Auth extends HTMLElement {
         this.authLoginButton = document.createElement('button');
         this.authDescription = document.createElement('p');
 
-        this.authBackdrop.className = 'auth-backdrop';
+        this.authBody.className = 'auth-backdrop';
         this.authPage.className = 'auth-page';
         this.authFormViewport.className = 'form';
         this.authFormTitle.className = 'form-title';
@@ -160,8 +160,8 @@ class Auth extends HTMLElement {
         this.authInputAccount.setAttribute('id', 'input-account');
         this.authInputPassword.setAttribute('id', 'input-password');
 
-        this.shadow.appendChild(this.authBackdrop);
-        this.authBackdrop.appendChild(this.authPage);
+        this.shadow.appendChild(this.authBody);
+        this.authBody.appendChild(this.authPage);
         this.authPage.appendChild(this.authFormViewport);
         this.authFormViewport.appendChild(this.authForm);
         this.authForm.appendChild(this.authFormTitle);
@@ -196,7 +196,7 @@ class Auth extends HTMLElement {
     }
 }
 
-customElements.define('auth-component', Auth);
+customElements.define('auth-container', Auth);
 
 export {
     Auth

@@ -9,7 +9,7 @@ module.exports = {
                 // 拆分 react 核心
                 reactDll: {
                     name: 'react-dll',
-                    priority: 13, // 權重要大於 vendor & 其他套件
+                    priority: 15, // 權重要大於 vendor & 其他套件
                     test: (module) => {
                         return /react|react-dom|prop-types/.test(module.context);
                     },

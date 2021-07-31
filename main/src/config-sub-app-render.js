@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import '../../common/components/side-bar/side-bar';
-import '../../common/components/header-bar/header-bar';
+import '../../common/containers/side-bar/side-bar';
+import '../../common/containers/header-bar/header-bar';
+// import '../../common/style/reset.scss';
 import './style/main.scss';
 
 function SubAppViewport(props) {

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {HashRouter, Switch, Route} from 'react-router-dom';
 import {routeNavigation} from '../../../common/util/route-navigation';
-import '../../../common/components/auth/auth';
+import '../../../common/containers/auth/auth';
 import './root.scss';
 
 const Login = () => {

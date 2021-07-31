@@ -5,7 +5,7 @@ class HeaderBar extends HTMLElement {
         this.userInfo = null;
         this.domStyling();
         this.domRender();
-        this.domEventInit();
+        // this.domEventInit();
     }
 
     domStyling() {
@@ -33,11 +33,11 @@ class HeaderBar extends HTMLElement {
             color: rgba(0, 0, 0, 0.65);
         }
         .user-info-area {
-            width: 20%;
-            min-width: 272px;
+            width: 16%;
+            min-width: 250px;
             padding: 0 10px;
             display: flex;
-            justify-content: center;
+            justify-content: flex-end;
             align-content: center;
         }
         .user-info-area>.user-name,
@@ -60,7 +60,7 @@ class HeaderBar extends HTMLElement {
     }
 
     domRender() {
-        this.headerBarBackdrop = document.createElement('div');
+        this.headerBarBody = document.createElement('div');
         this.logoArea = document.createElement('div');
         this.logoText = document.createElement('div');
 
@@ -68,7 +68,7 @@ class HeaderBar extends HTMLElement {
         this.userImage = document.createElement('img');
         this.userName = document.createElement('div');
 
-        this.headerBarBackdrop.className = 'header-bar';
+        this.headerBarBody.className = 'header-bar';
         this.logoArea.className = 'logo-area';
         this.logoText.className = 'logo-text';
         this.userInfoArea.className = 'user-info-area';
@@ -76,13 +76,13 @@ class HeaderBar extends HTMLElement {
         this.userName.className = 'user-name';
 
         this.logoText.textContent = 'LOGO';
-        this.userName.textContent = 'Default user name';
+        this.userName.textContent = 'Default User';
 
         this.userImage.setAttribute('src', 'https://raw.githubusercontent.com/azouaoui-med/pro-sidebar-template/gh-pages/src/img/user.jpg');
 
-        this.shadow.appendChild(this.headerBarBackdrop);
-        this.headerBarBackdrop.appendChild(this.logoArea);
-        this.headerBarBackdrop.appendChild(this.userInfoArea);
+        this.shadow.appendChild(this.headerBarBody);
+        this.headerBarBody.appendChild(this.logoArea);
+        this.headerBarBody.appendChild(this.userInfoArea);
         this.logoArea.appendChild(this.logoText);
         this.userInfoArea.appendChild(this.userImage);
         this.userInfoArea.appendChild(this.userName);
@@ -101,7 +101,7 @@ class HeaderBar extends HTMLElement {
     // }
 }
 
-customElements.define('header-bar-component', HeaderBar);
+customElements.define('header-bar-container', HeaderBar);
 
 export {
     HeaderBar
