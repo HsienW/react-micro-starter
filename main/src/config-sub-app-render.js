@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import '../../common/components/side-bar/side-bar';
+import './style/main.scss';
 
 function SubAppViewport(props) {
     const {loading} = props;

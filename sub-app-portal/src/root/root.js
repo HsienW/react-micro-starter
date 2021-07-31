@@ -30,7 +30,7 @@ export const PortalRootDom = (props) => {
 
     return (
         <div>
-            <h2 className='portal-root-title'>Portal root dom is working!</h2>
+            <div className='portal-root-title'>Portal root dom is working!</div>
             <div>test: {testValue}</div>
             <button onClick={() => click(setGlobalState)}>test</button>
             <HashRouter basename={routerBase}>

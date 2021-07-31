@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {HashRouter, Switch, Route} from 'react-router-dom';
 import {routeNavigation} from '../../../common/util/route-navigation';
+import './root.scss';
 
 const React1Page1 = () => {
     return <h2>React1 Page1</h2>;
@@ -26,7 +27,7 @@ export const React1RootDom = (props) => {
 
     return (
         <div>
-            <h2>React1 root dom is working!</h2>
+            <div className='react1-root-title'>React1 root dom is working!</div>
             <div>test: {testValue}</div>
             <button onClick={() => click(setGlobalState)}>test</button>
             <HashRouter basename={routerBase}>

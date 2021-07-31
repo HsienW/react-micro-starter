@@ -18,11 +18,13 @@ class SideBar extends HTMLElement {
         style.textContent = `
         .side-bar {
             background: #fff;
-            width: 250px;
-            padding: 10px;
-            float: left;
-            height: 100vh;
+            width: 100%;
+            height: 100%;
             overflow-x: hidden;
+            border-right: 1px solid #d9d9d9;
+        }
+        .side-bar ul {
+            padding: 10px;
         }
         .side-bar i {
             margin-right: 10px;
@@ -39,7 +41,6 @@ class SideBar extends HTMLElement {
             padding: 12px 15px;
             transition: all 0.15s;
             position: relative;
-            border-radius: 3px;
         }
         .side-bar>ul.side-bar-dropdown>li.active>a,
         .side-bar>ul>li>ul.side-bar-dropdown>li.active>a,
