@@ -47,12 +47,12 @@ module.exports = {
                     minChunks: 1 // 拆分條件是, 在 src 中最少 import 了1次的都拆
                 },
                 // 拆分 common code 成暫存, 避免重複打包
-                common: {
-                    chunks: 'initial',
-                    name: 'common',
-                    minSize: 100, // size 超過 100 byte 的都算
-                    minChunks: 1 // 拆分條件是, 在 src 中最少 import 了3次的都拆
-                }
+                // common: {
+                //     chunks: 'initial',
+                //     name: 'common',
+                //     minSize: 100, // size 超過 100 byte 的都算
+                //     minChunks: 1 // 拆分條件是, 在 src 中最少 import 了3次的都拆
+                // }
             }
         },
         // runtimeChunk 的作用是將包含 chunk 映射關係的列表從 main.js 中抽離出來

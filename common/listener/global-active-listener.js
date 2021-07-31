@@ -8,13 +8,13 @@ const globalActiveListener = (function () {
 
     operations.initOnloadListener = function () {
         window.addEventListener('load', () => {
-            pubSub.doPublish('onload')
+            pubSub.doPublish('onload');
         }, false);
     }
 
     operations.initRouteChangeListener = function () {
         window.addEventListener('popstate', () => {
-            pubSub.doPublish('route-change')
+            pubSub.doPublish('route-change');
         }, false);
     }
 

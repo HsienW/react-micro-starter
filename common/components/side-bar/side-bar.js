@@ -17,15 +17,15 @@ class SideBar extends HTMLElement {
         let style = document.createElement('style');
         style.textContent = `
         .side-bar {
-            background: #fff;
+            background: #ffffff;
             width: 100%;
             height: 100%;
             overflow-x: hidden;
             border-right: 1px solid #d9d9d9;
-            font-family: "Roboto", sans-serif;
         }
         .side-bar ul {
             padding: 10px;
+            margin: 0;
         }
         .side-bar i {
             margin-right: 10px;
@@ -43,11 +43,11 @@ class SideBar extends HTMLElement {
             transition: all 0.15s;
             position: relative;
         }
-        .side-bar>ul.side-bar-dropdown>li.active>a,
-        .side-bar>ul>li>ul.side-bar-dropdown>li.active>a,
-        .side-bar>ul>li>ul>li>ul.side-bar-dropdown>li.active>a,
-        .side-bar>ul>li>ul>li>ul>li>ul.side-bar-dropdown>li.active>a,
-        .side-bar>ul>li>ul>li>ul>li>ul>li>ul.side-bar-dropdown>li.active>a {
+        .side-bar>ul.side-bar-menu>li.active>a,
+        .side-bar>ul>li>ul.side-bar-menu>li.active>a,
+        .side-bar>ul>li>ul>li>ul.side-bar-menu>li.active>a,
+        .side-bar>ul>li>ul>li>ul>li>ul.side-bar-menu>li.active>a,
+        .side-bar>ul>li>ul>li>ul>li>ul>li>ul.side-bar-menu>li.active>a {
             background-color: #a8d4fb;
             color: #0089ff;
             box-shadow: 0px 1px 2px rgba(0, 137, 255, 0.2);
@@ -58,10 +58,10 @@ class SideBar extends HTMLElement {
         .side-bar>ul>li>ul>li>ul>li>ul>li>ul {
             display: none;
         }
-        .side-bar>ul>li.active>ul.side-bar-dropdown,
-        .side-bar>ul>li>ul>li.active>ul.side-bar-dropdown,
-        .side-bar>ul>li>ul>li>ul>li.active>ul.side-bar-dropdown,
-        .side-bar>ul>li>ul>li>ul>li>ul>li.active>ul.side-bar-dropdown {
+        .side-bar>ul>li.active>ul.side-bar-menu,
+        .side-bar>ul>li>ul>li.active>ul.side-bar-menu,
+        .side-bar>ul>li>ul>li>ul>li.active>ul.side-bar-menu,
+        .side-bar>ul>li>ul>li>ul>li>ul>li.active>ul.side-bar-menu {
             display: block;
         }
         
@@ -116,7 +116,7 @@ class SideBar extends HTMLElement {
         this.sideBarReact1Link = document.createElement('a');
 
         this.sideBarBackdrop.className = 'side-bar';
-        this.sideBarUl.className = 'side-bar-dropdown';
+        this.sideBarUl.className = 'side-bar-menu';
 
         this.sideBarPortalLink.textContent = 'Portal';
         this.sideBarReact1Link.textContent = 'React1';

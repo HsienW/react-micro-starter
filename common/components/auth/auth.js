@@ -28,7 +28,7 @@ class Auth extends HTMLElement {
             z-index: 99;
         }
         .form {
-            font-family: "Roboto", sans-serif;
+            font-family: 'Roboto', sans-serif;
             position: relative;
             z-index: 1;
             background: #FFFFFF;
@@ -40,7 +40,7 @@ class Auth extends HTMLElement {
             border-radius: 4px
         }
         .input {
-            font-family: "Roboto", sans-serif;
+            font-family: 'Roboto', sans-serif;
             outline: 0;
             background: #f2f2f2;
             width: 100%;
@@ -70,18 +70,18 @@ class Auth extends HTMLElement {
         }
         .form .form-title {
             margin: 0 0 0.8rem 0;
-            color: #333333;
+            color: rgba(0, 0, 0, 0.65);
             font-size: 1.75rem;
             font-weight: 700;
         }
         .form .form-sub-title {
             margin: 0.8rem; 0 0;
-            color: #b3b3b3;
+            color: rgba(0, 0, 0, 0.45);
             font-size: 0.85rem;
         }
         .form .description {
             margin: 0.8rem; 0 0;
-            color: #b3b3b3;
+            color: rgba(0, 0, 0, 0.45);
             font-size: 0.75rem;
         }
         .form .description a {
@@ -95,7 +95,7 @@ class Auth extends HTMLElement {
             margin: 0 auto;
         }
         .container:before, .container:after {
-            content: "";
+            content: '';
             display: block;
             clear: both;
         }
@@ -188,7 +188,7 @@ class Auth extends HTMLElement {
         const account = this.querySelector('#input-account').value;
         const userInfo = {
             account: account ? account : 'default',
-            displayName: account ? account : 'default',
+            userName: account ? account : 'default',
             token: 'default-token'
         };
         sessionStorage.setItem('user-info', JSON.stringify(userInfo));
