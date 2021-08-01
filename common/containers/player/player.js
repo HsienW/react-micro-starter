@@ -1,9 +1,14 @@
+import amplitude from 'amplitudejs';
+
 class Player extends HTMLElement {
     constructor() {
         super();
         this.shadow = this.attachShadow({mode: 'open'});
+        this.amplitude = amplitude;
         this.domStyling();
         this.domRender();
+        this.playerConfigInit();
+        this.domEventInit();
     }
 
     domStyling() {
@@ -77,7 +82,7 @@ class Player extends HTMLElement {
         
         .controls-area>.buttons {
             width: 100%;
-            height: 60%;
+            height: 70%;
             background-color: gray;
             display: flex;
             justify-content: center;
@@ -122,22 +127,21 @@ class Player extends HTMLElement {
         .progress {
            cursor: pointer;
             width: 100%;
-            height: 40%;
+            height: 30%;
             background-color: green;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
         }
         
         .progress>.buffer {
             height: 4px;
             width: 90%;
-            background-color: grey;
+            background-color: rgba(0, 0, 0, 0.45);
         }
         
         .progress>.conduct {
             height: 4px;
-            position: absolute;
             top: 0;
             width: 10%;
             background-color: red;
@@ -159,7 +163,67 @@ class Player extends HTMLElement {
         this.shadow.appendChild(style);
     }
 
+//
+// <div id="amplitude-player">
+//
+//     <!-- Left Side Player -->
+// <div id="amplitude-left">
+// <img data-amplitude-song-info="cover_art_url"/>
+// <div id="player-left-bottom">
+// <div id="time-container">
+// <span className="current-time">
+// <span className="amplitude-current-minutes" ></span>:<span className="amplitude-current-seconds"></span>
+// </span>
+// <div id="progress-container">
+// <input type="range" className="amplitude-song-slider"/>
+// <progress id="song-played-progress" className="amplitude-song-played-progress"></progress>
+// <progress id="song-buffered-progress" className="amplitude-buffered-progress" value="0"></progress>
+// </div>
+// <span className="duration">
+// <span className="amplitude-duration-minutes"></span>:<span className="amplitude-duration-seconds"></span>
+// </span>
+// </div>
+//
+// <div id="control-container">
+// <div id="repeat-container">
+// <div className="amplitude-repeat" id="repeat"></div>
+// <div className="amplitude-shuffle amplitude-shuffle-off" id="shuffle"></div>
+// </div>
+//
+// <div id="central-control-container">
+// <div id="central-controls">
+// <div className="amplitude-prev" id="previous"></div>
+// <div className="amplitude-play-pause" id="play-pause"></div>
+// <div className="amplitude-next" id="next"></div>
+// </div>
+// </div>
+//
+// <div id="volume-container">
+// <div className="volume-controls">
+// <div className="amplitude-mute amplitude-not-muted"></div>
+// <input type="range" className="amplitude-volume-slider"/>
+// <div className="ms-range-fix"></div>
+// </div>
+// <div className="amplitude-shuffle amplitude-shuffle-off" id="shuffle-right"></div>
+// </div>
+// </div>
+//
+// <div id="meta-container">
+// <span data-amplitude-song-info="name" className="song-name"></span>
+//
+// <div className="song-artist-album">
+// <span data-amplitude-song-info="artist"></span>
+// <span data-amplitude-song-info="album"></span>
+// </div>
+// </div>
+// </div>
+// </div>
+
     domRender() {
+
+        console.log('看看看看看看看看看看看看看看看看看看看看看');
+        console.log(this.amplitude);
+
         this.playerBody = document.createElement('div');
         this.detailArea = document.createElement('div');
         this.detailSongImage = document.createElement('img');
@@ -220,7 +284,10 @@ class Player extends HTMLElement {
 
         this.controlRepeat.setAttribute('src', 'https://music-player-demo-assets.s3.amazonaws.com/icon/repeat.svg');
         this.controlPrev.setAttribute('src', 'https://music-player-demo-assets.s3.amazonaws.com/icon/prev.svg');
+
         this.controlPlay.setAttribute('src', 'https://music-player-demo-assets.s3.amazonaws.com/icon/play.svg');
+        this.controlPlay.setAttribute('id', 'play-pause');
+
         this.controlNext.setAttribute('src', 'https://music-player-demo-assets.s3.amazonaws.com/icon/next.svg');
         this.controlShuffle.setAttribute('src', 'https://music-player-demo-assets.s3.amazonaws.com/icon/shuffle.svg');
 
@@ -246,14 +313,55 @@ class Player extends HTMLElement {
 
         this.playerBody.appendChild(this.volumeArea);
 
+
         // this.playerBody.appendChild(this.controlArea);
 
         // this.progressArea.appendChild(this.progressBuffer);
         // this.progressArea.appendChild(this.progressConduct);
     }
 
+    playerConfigInit() {
+        this.amplitude.init({
+            "songs": [
+                // {
+                //     "name": "Risin' High (feat Raashan Ahmad)",
+                //     "artist": "Ancient Astronauts",
+                //     "album": "We Are to Answer",
+                //     "url": "https://p.scdn.co/mp3-preview/641fd877ee0f42f3713d1649e20a9734cc64b8f9",
+                //     "cover_art_url": "https://521dimensions.com/img/open-source/amplitudejs/album-art/we-are-to-answer.jpg"
+                // },
+                // {
+                //     "name": "Risin' High (feat Raashan Ahmad)",
+                //     "artist": "Ancient Astronauts",
+                //     "album": "We Are to Answer",
+                //     "url": "https://p.scdn.co/mp3-preview/e001676375ea2b4807cee2f98b51f2f3fe0d109b",
+                //     "cover_art_url": "https://521dimensions.com/img/open-source/amplitudejs/album-art/we-are-to-answer.jpg"
+                // }
+            ],
+            waveforms: {
+                sample_rate: 50
+            }
+        });
+    }
+
     domEventInit() {
-        this.sideBarUl.addEventListener('click', this.sideBarItemClick.bind(this), false);
+        this.controlPlay.addEventListener('click', () => {
+
+            const newSong = {
+                "name": "Risin' High (feat Raashan Ahmad)",
+                "artist": "Ancient Astronauts",
+                "album": "We Are to Answer",
+                "url": "https://p.scdn.co/mp3-preview/641fd877ee0f42f3713d1649e20a9734cc64b8f9",
+                "cover_art_url": "https://521dimensions.com/img/open-source/amplitudejs/album-art/we-are-to-answer.jpg"
+            };
+
+            this.amplitude.playNow(newSong)
+            // this.amplitude.play();
+        }, false);
+
+        this.controlNext.addEventListener('click', () => {
+            this.amplitude.next();
+        }, false);
     }
 }
 
