@@ -7,7 +7,7 @@
   font-family: $font-family;
   display: grid;
   grid-template-columns: 250px auto;
-  grid-template-rows: 64px auto 90px;
+  grid-template-rows: 64px auto 100px;
   grid-template-areas:
     'header header'
     'side content'
@@ -36,6 +36,5 @@
   grid-area: footer;
   width: 100%;
   height: 100%;
-  display: flex;
   background-color: yellow;
 }

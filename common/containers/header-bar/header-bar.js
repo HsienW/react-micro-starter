@@ -20,18 +20,21 @@ class HeaderBar extends HTMLElement {
             justify-content: space-between;
             align-content: center;
         }
+        
         .logo-area {
             width: 250px;
             display: flex;
             justify-content: center;
             align-content: center;
         }
+        
         .logo-text {
             align-self: center;
             font-weight: 700;
             font-size: 30px;
             color: rgba(0, 0, 0, 0.65);
         }
+        
         .user-info-area {
             width: 16%;
             min-width: 250px;
@@ -40,14 +43,17 @@ class HeaderBar extends HTMLElement {
             justify-content: flex-end;
             align-content: center;
         }
+        
         .user-info-area>.user-name,
         .user-info-area>.user-image {
             align-self: center;
         }
+        
         .user-image {
             width: 40px;
             height: 40px;
         }
+        
         .user-name {
             width: 50%;
             margin-left: 10px;

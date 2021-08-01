@@ -23,17 +23,21 @@ class SideBar extends HTMLElement {
             overflow-x: hidden;
             border-right: 1px solid #d9d9d9;
         }
+        
         .side-bar ul {
             padding: 10px;
             margin: 0;
         }
+        
         .side-bar i {
             margin-right: 10px;
         }
+        
         .side-bar li {
             cursor:pointer;
             list-style-type: none;
         }
+        
         .side-bar ul li a {
             color: #9c9c9c;
             text-decoration: none;
@@ -43,6 +47,7 @@ class SideBar extends HTMLElement {
             transition: all 0.15s;
             position: relative;
         }
+        
         .side-bar>ul.side-bar-menu>li.active>a,
         .side-bar>ul>li>ul.side-bar-menu>li.active>a,
         .side-bar>ul>li>ul>li>ul.side-bar-menu>li.active>a,
@@ -52,12 +57,14 @@ class SideBar extends HTMLElement {
             color: #0089ff;
             box-shadow: 0px 1px 2px rgba(0, 137, 255, 0.2);
         }
+        
         .side-bar>ul>li>ul,
         .side-bar>ul>li>ul>li>ul,
         .side-bar>ul>li>ul>li>ul>li>ul,
         .side-bar>ul>li>ul>li>ul>li>ul>li>ul {
             display: none;
         }
+        
         .side-bar>ul>li.active>ul.side-bar-menu,
         .side-bar>ul>li>ul>li.active>ul.side-bar-menu,
         .side-bar>ul>li>ul>li>ul>li.active>ul.side-bar-menu,
@@ -71,6 +78,7 @@ class SideBar extends HTMLElement {
         .side-bar>ul>li>ul>li>ul>li>ul>li>ul {
             padding-left: 20px;
         }
+        
         .side-bar a:not(:only-child):after {
             content: "\\f105";
             position: absolute;
@@ -83,22 +91,27 @@ class SideBar extends HTMLElement {
             font-weight: 900;
             transition: 0.15s;
         }
+        
         .side-bar .active>a:not(:only-child):after {
             transform: rotate(90deg);
         }
+        
         .side-bar::-webkit-scrollbar {
             width: 5px;
             height: 8px;
         }
+        
         .side-bar::-webkit-scrollbar-track {
             border-radius: 10px;
             background-color: #e4e4e4;
         }
+        
         .side-bar::-webkit-scrollbar-thumb {
             background: #0089ff;
             border-radius: 10px;
             transition: 0.15s;
         }
+        
         .side-bar::-webkit-scrollbar-thumb:hover {
             background: #d5b14c;
             transition: 0.15s;

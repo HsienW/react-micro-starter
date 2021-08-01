@@ -21,12 +21,14 @@ class Auth extends HTMLElement {
             height: 100%;
             background-color: rgba(51, 51, 51, 0.8);
         }
+        
         .auth-page {
             width: 420px;
             padding: 8% 0 0;
             margin: auto;
             z-index: 99;
         }
+        
         .form {
             font-family: 'Roboto', sans-serif;
             position: relative;
@@ -39,6 +41,7 @@ class Auth extends HTMLElement {
             box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
             border-radius: 4px
         }
+        
         .input {
             font-family: 'Roboto', sans-serif;
             outline: 0;
@@ -51,6 +54,7 @@ class Auth extends HTMLElement {
             font-size: 0.75rem;
             border-radius: 4px
         }
+        
         .button {
             text-transform: uppercase;
             outline: 0;
@@ -65,44 +69,53 @@ class Auth extends HTMLElement {
             cursor: pointer;
             border-radius: 4px
         }
+        
         .form button:hover,.form button:active,.form button:focus {
             opacity: 0.8
         }
+        
         .form .form-title {
             margin: 0 0 0.8rem 0;
             color: rgba(0, 0, 0, 0.65);
             font-size: 1.75rem;
             font-weight: 700;
         }
+        
         .form .form-sub-title {
             margin: 0.8rem; 0 0;
             color: rgba(0, 0, 0, 0.45);
             font-size: 0.85rem;
         }
+        
         .form .description {
             margin: 0.8rem; 0 0;
             color: rgba(0, 0, 0, 0.45);
             font-size: 0.75rem;
         }
+        
         .form .description a {
             color: #4CAF50;
             text-decoration: none;
         }
+        
         .container {
             position: relative;
             z-index: 1;
             max-width: 300px;
             margin: 0 auto;
         }
+        
         .container:before, .container:after {
             content: '';
             display: block;
             clear: both;
         }
+        
         .container .info {
             margin: 50px auto;
             text-align: center;
         }
+        
         .container .info h1 {
             margin: 0 0 15px;
             padding: 0;
@@ -110,14 +123,17 @@ class Auth extends HTMLElement {
             font-weight: 300;
             color: #1a1a1a;
         }
+        
         .container .info span {
             color: #4d4d4d;
             font-size: 12px;
         }
+        
         .container .info span a {
             color: #000000;
             text-decoration: none;
         }
+        
         .container .info span .fa {
             color: #EF3B3A;
         }

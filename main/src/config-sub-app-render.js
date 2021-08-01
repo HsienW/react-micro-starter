@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import '../../common/containers/side-bar/side-bar';
 import '../../common/containers/header-bar/header-bar';
+import '../../common/containers/player/player';
 // import '../../common/style/reset.scss';
 import './style/main.scss';
 
