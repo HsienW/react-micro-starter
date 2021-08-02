@@ -6,6 +6,7 @@
   "scripts": {
     "install": "npm-run-all --serial install:*",
     "install:main": "cd main && npm i",
+    "install:common": "cd common && npm i",
     "install:sub-app-portal": "cd sub-app-portal && npm i",
     "install:sub-app-react1": "cd sub-app-react1 && npm i",
     "start": "npm-run-all --parallel start:*",
