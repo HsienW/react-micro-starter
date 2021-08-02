@@ -84,7 +84,7 @@ class HeaderBar extends HTMLElement {
         this.logoText.textContent = 'LOGO';
         this.userName.textContent = 'Default User';
 
-        this.userImage.setAttribute('src', 'https://raw.githubusercontent.com/azouaoui-med/pro-sidebar-template/gh-pages/src/img/user.jpg');
+        this.userImage.setAttribute('src', 'https://music-player-demo-assets.s3.amazonaws.com/icon/user.svg');
 
         this.shadow.appendChild(this.headerBarBody);
         this.headerBarBody.appendChild(this.logoArea);

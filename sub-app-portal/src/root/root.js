@@ -5,7 +5,7 @@ import '../../../common/containers/auth/auth';
 import './root.scss';
 
 const Login = () => {
-    return <auth-component/>;
+    return <auth-container/>;
 };
 
 const PortalPage1 = () => {

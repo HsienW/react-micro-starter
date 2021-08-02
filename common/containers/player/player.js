@@ -89,7 +89,7 @@ class Player extends HTMLElement {
             align-items: center;
         }
         
-        .controls-area>.buttons>.icon {
+        .icon {
             width: 20px;
             height: 20px;
             cursor: pointer;
@@ -99,14 +99,6 @@ class Player extends HTMLElement {
         
         .controls-area>.buttons>.icon:hover {
             color: #f33336;
-        }
-        
-        .controls-area>.buttons>.icon.play,
-        .controls-area>.buttons>.icon.pause {
-            color: #f44336;
-            font-size: 55px;
-            margin-left: 5px;
-            margin-right: 5px
         }
         
         .controls-area>.buttons>.icon.pause,
@@ -124,27 +116,34 @@ class Player extends HTMLElement {
             height: 28px;
         }
         
-        .progress {
+        .progress-area {
            cursor: pointer;
             width: 100%;
             height: 30%;
             background-color: green;
             display: flex;
             justify-content: center;
-            align-items: flex-start;
+            align-items: center;
         }
         
-        .progress>.buffer {
+        .progress-area>.progress-bar {
             height: 4px;
-            width: 90%;
+            width: 100%;
             background-color: rgba(0, 0, 0, 0.45);
         }
         
-        .progress>.conduct {
+        .progress-bar>.progress-bar-conduct {
             height: 4px;
-            top: 0;
             width: 10%;
             background-color: red;
+            z-index:99;
+        }
+        
+        .progress-area>.progress-second {
+            width: 40px;
+            color: #ffffff;
+            font-size: 12px;
+            background-color: yellow;
         }
         
         .volume-area {
@@ -153,71 +152,23 @@ class Player extends HTMLElement {
             min-width: 300px;
             background-color: yellow;
             padding: 0 10px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
         }
         
-        .player input.volume {
-            display: none;
-            width: 50px;
+        .volume-area>.volume-range-bar {
+            height: 4px;
+            width: 30%;
+            background-color: blue;
+            border: 0;
+        }
+        
+        .volume-area>.volume-button {
         }
     `
         this.shadow.appendChild(style);
     }
-
-//
-// <div id="amplitude-player">
-//
-//     <!-- Left Side Player -->
-// <div id="amplitude-left">
-// <img data-amplitude-song-info="cover_art_url"/>
-// <div id="player-left-bottom">
-// <div id="time-container">
-// <span className="current-time">
-// <span className="amplitude-current-minutes" ></span>:<span className="amplitude-current-seconds"></span>
-// </span>
-// <div id="progress-container">
-// <input type="range" className="amplitude-song-slider"/>
-// <progress id="song-played-progress" className="amplitude-song-played-progress"></progress>
-// <progress id="song-buffered-progress" className="amplitude-buffered-progress" value="0"></progress>
-// </div>
-// <span className="duration">
-// <span className="amplitude-duration-minutes"></span>:<span className="amplitude-duration-seconds"></span>
-// </span>
-// </div>
-//
-// <div id="control-container">
-// <div id="repeat-container">
-// <div className="amplitude-repeat" id="repeat"></div>
-// <div className="amplitude-shuffle amplitude-shuffle-off" id="shuffle"></div>
-// </div>
-//
-// <div id="central-control-container">
-// <div id="central-controls">
-// <div className="amplitude-prev" id="previous"></div>
-// <div className="amplitude-play-pause" id="play-pause"></div>
-// <div className="amplitude-next" id="next"></div>
-// </div>
-// </div>
-//
-// <div id="volume-container">
-// <div className="volume-controls">
-// <div className="amplitude-mute amplitude-not-muted"></div>
-// <input type="range" className="amplitude-volume-slider"/>
-// <div className="ms-range-fix"></div>
-// </div>
-// <div className="amplitude-shuffle amplitude-shuffle-off" id="shuffle-right"></div>
-// </div>
-// </div>
-//
-// <div id="meta-container">
-// <span data-amplitude-song-info="name" className="song-name"></span>
-//
-// <div className="song-artist-album">
-// <span data-amplitude-song-info="artist"></span>
-// <span data-amplitude-song-info="album"></span>
-// </div>
-// </div>
-// </div>
-// </div>
 
     domRender() {
 
@@ -240,11 +191,15 @@ class Player extends HTMLElement {
         this.controlPause = document.createElement('img');
         this.controlNext = document.createElement('img');
 
-        this.progress = document.createElement('div');
-        this.progressBuffer = document.createElement('div');
-        this.progressConduct = document.createElement('div');
+        this.progressArea = document.createElement('div');
+        this.progressBar = document.createElement('div');
+        this.progressBarConduct = document.createElement('div');
+        this.progressPlayedSeconds = document.createElement('div');
+        this.progressSongSeconds = document.createElement('div');
 
         this.volumeArea = document.createElement('div');
+        this.volumeButton = document.createElement('img');
+        this.volumeRangeBar = document.createElement('input');
 
         this.playerBody.className = 'player';
         this.detailArea.className = 'detail-area';
@@ -254,14 +209,6 @@ class Player extends HTMLElement {
 
         this.controlArea.className = 'controls-area';
         this.controlAreaButtons.className = 'buttons'
-
-        this.progress.className = 'progress';
-        this.progressBuffer.className = 'buffer';
-        this.progressConduct.className = 'conduct';
-
-        this.volumeArea.className = 'volume-area';
-
-
         this.controlRepeat.className = 'icon repeat';
         this.controlRepeatOne.className = 'icon repeat-one';
         this.controlShuffle.className = 'icon shuffle';
@@ -269,27 +216,44 @@ class Player extends HTMLElement {
         this.controlPlay.className = 'icon play';
         this.controlPause.className = 'icon pause';
         this.controlNext.className = 'icon next';
-        // this.controlVolume.className = 'icon volume material-icons';
-        // this.controlVolumeRange.className = 'volume';
         //
-        // this.controlVolumeRange.setAttribute('type', 'range');
-        // this.controlVolumeRange.setAttribute('min', '0');
-        // this.controlVolumeRange.setAttribute('max', '100');
-        // this.controlVolumeRange.setAttribute('step', '1');
-        // this.controlVolumeRange.setAttribute('value', '100');
+        // <div className="progress">
+        //     <div className="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0"
+        //          aria-valuemax="100"></div>
+        // </div>
 
+        this.progressArea.className = 'progress-area';
+        this.progressBar.className = 'progress-bar';
+        this.progressBarConduct.className = 'progress-bar-conduct';
+        this.progressPlayedSeconds.className = 'progress-second';
+        this.progressSongSeconds.className = 'progress-second';
+
+        this.volumeArea.className = 'volume-area';
+        this.volumeButton.className = 'icon volume-button';
+        this.volumeRangeBar.className = 'volume-range-bar';
+        //
+        this.volumeRangeBar.setAttribute('type', 'range');
+        this.volumeRangeBar.setAttribute('min', '0');
+        this.volumeRangeBar.setAttribute('max', '100');
+        this.volumeRangeBar.setAttribute('step', '1');
+        this.volumeRangeBar.setAttribute('value', '100');
         this.detailSongImage.setAttribute('src', 'https://i.scdn.co/image/21e1ebcd7ebd3b679d9d5084bba1e163638b103a');
-        this.detailSongName.textContent = 'The Best Of Keane (Deluxe Edition)';
-        this.detailArtistName.textContent = 'Keane';
 
         this.controlRepeat.setAttribute('src', 'https://music-player-demo-assets.s3.amazonaws.com/icon/repeat.svg');
         this.controlPrev.setAttribute('src', 'https://music-player-demo-assets.s3.amazonaws.com/icon/prev.svg');
-
         this.controlPlay.setAttribute('src', 'https://music-player-demo-assets.s3.amazonaws.com/icon/play.svg');
         this.controlPlay.setAttribute('id', 'play-pause');
-
         this.controlNext.setAttribute('src', 'https://music-player-demo-assets.s3.amazonaws.com/icon/next.svg');
         this.controlShuffle.setAttribute('src', 'https://music-player-demo-assets.s3.amazonaws.com/icon/shuffle.svg');
+        this.volumeButton.setAttribute('src', 'https://music-player-demo-assets.s3.amazonaws.com/icon/volume.svg');
+
+        this.progressBar.setAttribute('amplitude-main-song-played-progress', 'true');
+
+        this.detailSongName.textContent = 'The Best Of Keane (Deluxe Edition)';
+        this.detailArtistName.textContent = 'Keane';
+
+        this.progressPlayedSeconds.textContent = '00:00';
+        this.progressSongSeconds.textContent = '00:00';
 
         this.shadow.appendChild(this.playerBody);
         this.playerBody.appendChild(this.detailArea);
@@ -307,21 +271,20 @@ class Player extends HTMLElement {
         this.controlAreaButtons.appendChild(this.controlNext);
         this.controlAreaButtons.appendChild(this.controlShuffle);
 
-        this.controlArea.appendChild(this.progress);
-        this.progress.appendChild(this.progressBuffer);
-        this.progress.appendChild(this.progressConduct);
+        this.controlArea.appendChild(this.progressArea);
+        this.progressArea.appendChild(this.progressPlayedSeconds);
+        this.progressArea.appendChild(this.progressBar);
+        this.progressBar.appendChild(this.progressBarConduct);
+        this.progressArea.appendChild(this.progressSongSeconds);
 
         this.playerBody.appendChild(this.volumeArea);
-
-
-        // this.playerBody.appendChild(this.controlArea);
-
-        // this.progressArea.appendChild(this.progressBuffer);
-        // this.progressArea.appendChild(this.progressConduct);
+        this.volumeArea.appendChild(this.volumeButton);
+        this.volumeArea.appendChild(this.volumeRangeBar);
     }
 
     playerConfigInit() {
         this.amplitude.init({
+            "volume": 35,
             "songs": [
                 // {
                 //     "name": "Risin' High (feat Raashan Ahmad)",
@@ -352,15 +315,56 @@ class Player extends HTMLElement {
                 "artist": "Ancient Astronauts",
                 "album": "We Are to Answer",
                 "url": "https://p.scdn.co/mp3-preview/641fd877ee0f42f3713d1649e20a9734cc64b8f9",
-                "cover_art_url": "https://521dimensions.com/img/open-source/amplitudejs/album-art/we-are-to-answer.jpg"
+                "cover_art_url": "https://521dimensions.com/img/open-source/amplitudejs/album-art/we-are-to-answer.jpg",
+                "callbacks": {
+                    'time_update': function () {
+                        let songPlayedPercentage = this.amplitude.getSongPlayedPercentage();
+
+                        console.log('mmmmmmmmmmmmmmmmmmmm');
+                        console.log(songPlayedPercentage);
+                        /*
+                            SET YOUR ELEMENT HERE PERCENT WISE
+                        */
+                    }
+                },
+                "time_callbacks": {
+                    1: function () {
+                        console.log("1 second into the song")
+                    },
+                }
             };
 
-            this.amplitude.playNow(newSong)
+            this.amplitude.playNow(newSong);
             // this.amplitude.play();
         }, false);
 
         this.controlNext.addEventListener('click', () => {
             this.amplitude.next();
+        }, false);
+
+        this.progressBar.addEventListener('click', function (event) {
+            let offset = this.getBoundingClientRect();
+            let x = event.pageX - offset.left;
+
+            console.log('bbbbbbbbbbbbbbbbbbbbbbbbbbb');
+            console.log(event.pageX);
+            console.log(offset);
+            console.log(x);
+            console.log(offset.width - x);
+
+
+            // this.amplitude.setSongPlayedPercentage((parseFloat(x) / parseFloat(this.offsetWidth)) * 100);
+        }, false);
+
+        this.controlNext.addEventListener('click', () => {
+            this.amplitude.next();
+        }, false);
+
+
+        this.volumeRangeBar.addEventListener('input', (event) => {
+            this.amplitude.setVolume(event.target.value);
+            console.log(this.amplitude.getSongPlayedSeconds());
+            console.log(this.amplitude.getSongDuration());
         }, false);
     }
 }
