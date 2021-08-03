@@ -129,25 +129,33 @@ class Player extends HTMLElement {
         .progress-area>.progress-bar {
             height: 4px;
             width: 100%;
-            background-color: rgba(0, 0, 0, 0.45);
-            border-radius: 100px;
-            display: flex;
-            position: relative;
-            justify-content: flex-start;
-            align-items: center;
         }
         
-        .progress-bar>.progress-bar-conduct {
-            animation: load 3s normal forwards;
-            height: 4px;
-            width: 0;
-            border-radius: 100px;
-            background-color: red;
+         .progress-area>input[type="range"] {
+            -webkit-appearance: none;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 5px;
+            background-image: linear-gradient(#434343, #434343);
+            background-size: 0% 100%;
+            background-repeat: no-repeat;
         }
         
-         @keyframes load {
-            0% { width: 0; }
-            100% { width: 68%; }
+        .progress-area>input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 10px;
+            width: 10px;
+            border-radius: 50%;
+            background: #434343;
+            cursor: ew-resize;
+            box-shadow: 0 0 2px 0 #555;
+            transition: background 0.1s ease-in-out;
+        }
+        
+        .progress-area>input[type=range]::-webkit-slider-runnable-track  {
+            -webkit-appearance: none;
+            box-shadow: none;
+            border: none;
+            background: transparent;
         }
         
         .progress-area>.progress-second {
@@ -178,7 +186,7 @@ class Player extends HTMLElement {
         .volume-area>.volume-button {
         }
         
-        input[type="range"] {
+        .volume-area>input[type="range"] {
             -webkit-appearance: none;
             background: rgba(255, 255, 255, 0.6);
             border-radius: 5px;
@@ -187,7 +195,7 @@ class Player extends HTMLElement {
             background-repeat: no-repeat;
         }
         
-        input[type="range"]::-webkit-slider-thumb {
+        .volume-area>input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
             height: 14px;
             width: 14px;
@@ -198,7 +206,7 @@ class Player extends HTMLElement {
             transition: background .3s ease-in-out;
         }
         
-        input[type=range]::-webkit-slider-runnable-track  {
+        .volume-area>input[type=range]::-webkit-slider-runnable-track  {
             -webkit-appearance: none;
             box-shadow: none;
             border: none;
@@ -231,8 +239,8 @@ class Player extends HTMLElement {
         this.controlNext = document.createElement('img');
 
         this.progressArea = document.createElement('div');
-        this.progressBar = document.createElement('div');
-        this.progressBarConduct = document.createElement('div');
+        this.progressBar = document.createElement('input');
+        // this.progressBarConduct = document.createElement('div');
         this.progressPlayedSeconds = document.createElement('div');
         this.progressSongSeconds = document.createElement('div');
 
@@ -263,13 +271,20 @@ class Player extends HTMLElement {
 
         this.progressArea.className = 'progress-area';
         this.progressBar.className = 'progress-bar';
-        this.progressBarConduct.className = 'progress-bar-conduct';
+        // this.progressBarConduct.className = 'progress-bar-conduct';
         this.progressPlayedSeconds.className = 'progress-second';
         this.progressSongSeconds.className = 'progress-second';
 
         this.volumeArea.className = 'volume-area';
         this.volumeButton.className = 'icon volume-button';
         this.volumeRangeBar.className = 'volume-range-bar';
+
+        this.progressBar.setAttribute('amplitude-main-song-played-progress', 'true');
+        this.progressBar.setAttribute('type', 'range');
+        this.progressBar.setAttribute('min', '0');
+        this.progressBar.setAttribute('max', '100');
+        this.progressBar.setAttribute('step', '1');
+        this.progressBar.setAttribute('value', '0');
         //
         this.volumeRangeBar.setAttribute('type', 'range');
         this.volumeRangeBar.setAttribute('min', '0');
@@ -285,8 +300,6 @@ class Player extends HTMLElement {
         this.controlNext.setAttribute('src', 'https://music-player-demo-assets.s3.amazonaws.com/icon/next.svg');
         this.controlShuffle.setAttribute('src', 'https://music-player-demo-assets.s3.amazonaws.com/icon/shuffle.svg');
         this.volumeButton.setAttribute('src', 'https://music-player-demo-assets.s3.amazonaws.com/icon/volume.svg');
-
-        this.progressBar.setAttribute('amplitude-main-song-played-progress', 'true');
 
         this.detailSongName.textContent = 'The Best Of Keane (Deluxe Edition)';
         this.detailArtistName.textContent = 'Keane';
@@ -313,7 +326,7 @@ class Player extends HTMLElement {
         this.controlArea.appendChild(this.progressArea);
         this.progressArea.appendChild(this.progressPlayedSeconds);
         this.progressArea.appendChild(this.progressBar);
-        this.progressBar.appendChild(this.progressBarConduct);
+        // this.progressBar.appendChild(this.progressBarConduct);
         this.progressArea.appendChild(this.progressSongSeconds);
 
         this.playerBody.appendChild(this.volumeArea);
@@ -333,11 +346,20 @@ class Player extends HTMLElement {
                 }
             ],
             callbacks: {
-                timeupdate : () => {
+                timeupdate: () => {
                     console.log('播播播播播播播播播播播');
                     console.log(this.amplitude.getSongPlayedPercentage());
+
+                    const min = 0;
+                    const max = this.amplitude.getSongDuration();
+                    const val = this.amplitude.getSongPlayedSeconds();
+
+                    // let songPlayedTime = isNaN(this.amplitude.getSongPlayedPercentage()) ? '0' : this.amplitude.getSongPlayedPercentage();
+                    let songPlayedTime = isNaN(this.amplitude.getSongPlayedPercentage()) ? '0' : this.amplitude.getSongPlayedPercentage();
+                    this.inputBarChangeStyle(this.progressBar, min, max, val);
+                    this.progressBar.setAttribute('value', songPlayedTime.toString());
                 },
-                stop: function(){
+                stop: function () {
                     console.log("Audio has been stopped.")
                 }
             }
@@ -371,15 +393,23 @@ class Player extends HTMLElement {
             this.amplitude.next();
         }, false);
 
-        this.progressBar.addEventListener('click', function (event) {
+        this.progressBar.addEventListener('input', (event) => {
+            const min = event.target.min
+            const max = event.target.max
+            const val = event.target.value
+
+            event.target.style.backgroundSize = (val - min) * 100 / (max - min) + '% 100%'
+        }, false);
+
+        this.progressBar.addEventListener('mouseup', function (event) {
             let offset = this.getBoundingClientRect();
             let x = event.pageX - offset.left;
 
             console.log('bbbbbbbbbbbbbbbbbbbbbbbbbbb');
-            console.log(event.pageX);
-            console.log(offset);
-            console.log(x);
-            console.log(offset.width - x);
+            // console.log(event.pageX);
+            // console.log(offset);
+            // console.log(x);
+            // console.log(offset.width - x);
 
             let value = parseFloat((x / offset.width)) * 100;
 
@@ -388,6 +418,7 @@ class Player extends HTMLElement {
             // this.amplitude.setSongPlayedPercentage((parseFloat(x) / parseFloat(this.offsetWidth)) * 100);
         }, false);
 
+
         this.controlNext.addEventListener('click', () => {
             this.amplitude.next();
         }, false);
@@ -395,10 +426,6 @@ class Player extends HTMLElement {
 
         this.volumeRangeBar.addEventListener('input', (event) => {
             this.amplitude.setVolume(event.target.value);
-
-            if (event.target.type !== 'range') {
-                event.target = document.getElementById('range')
-            }
             const min = event.target.min
             const max = event.target.max
             const val = event.target.value
@@ -409,6 +436,10 @@ class Player extends HTMLElement {
             console.log(this.amplitude.getSongPlayedSeconds());
             console.log(this.amplitude.getSongDuration());
         }, false);
+    }
+
+    inputBarChangeStyle(target, min, max, value) {
+        target.style.backgroundSize = (value - min) * 100 / (max - min) + '% 100%'
     }
 }
 
