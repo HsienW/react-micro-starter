@@ -117,7 +117,7 @@ class Player extends HTMLElement {
         }
         
         .progress-area {
-           cursor: pointer;
+            cursor: pointer;
             width: 100%;
             height: 30%;
             background-color: green;
@@ -130,13 +130,24 @@ class Player extends HTMLElement {
             height: 4px;
             width: 100%;
             background-color: rgba(0, 0, 0, 0.45);
+            border-radius: 100px;
+            display: flex;
+            position: relative;
+            justify-content: flex-start;
+            align-items: center;
         }
         
         .progress-bar>.progress-bar-conduct {
+            animation: load 3s normal forwards;
             height: 4px;
-            width: 10%;
+            width: 0;
+            border-radius: 100px;
             background-color: red;
-            z-index:99;
+        }
+        
+         @keyframes load {
+            0% { width: 0; }
+            100% { width: 68%; }
         }
         
         .progress-area>.progress-second {
@@ -166,6 +177,34 @@ class Player extends HTMLElement {
         
         .volume-area>.volume-button {
         }
+        
+        input[type="range"] {
+            -webkit-appearance: none;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 5px;
+            background-image: linear-gradient(#ff4500, #ff4500);
+            background-size: 70% 100%;
+            background-repeat: no-repeat;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 14px;
+            width: 14px;
+            border-radius: 50%;
+            background: #ff4500;
+            cursor: ew-resize;
+            box-shadow: 0 0 2px 0 #555;
+            transition: background .3s ease-in-out;
+        }
+        
+        input[type=range]::-webkit-slider-runnable-track  {
+            -webkit-appearance: none;
+            box-shadow: none;
+            border: none;
+            background: transparent;
+        }
+    }
     `
         this.shadow.appendChild(style);
     }
@@ -236,7 +275,7 @@ class Player extends HTMLElement {
         this.volumeRangeBar.setAttribute('min', '0');
         this.volumeRangeBar.setAttribute('max', '100');
         this.volumeRangeBar.setAttribute('step', '1');
-        this.volumeRangeBar.setAttribute('value', '100');
+        this.volumeRangeBar.setAttribute('value', '50');
         this.detailSongImage.setAttribute('src', 'https://i.scdn.co/image/21e1ebcd7ebd3b679d9d5084bba1e163638b103a');
 
         this.controlRepeat.setAttribute('src', 'https://music-player-demo-assets.s3.amazonaws.com/icon/repeat.svg');
@@ -284,54 +323,44 @@ class Player extends HTMLElement {
 
     playerConfigInit() {
         this.amplitude.init({
-            "volume": 35,
-            "songs": [
-                // {
-                //     "name": "Risin' High (feat Raashan Ahmad)",
-                //     "artist": "Ancient Astronauts",
-                //     "album": "We Are to Answer",
-                //     "url": "https://p.scdn.co/mp3-preview/641fd877ee0f42f3713d1649e20a9734cc64b8f9",
-                //     "cover_art_url": "https://521dimensions.com/img/open-source/amplitudejs/album-art/we-are-to-answer.jpg"
-                // },
-                // {
-                //     "name": "Risin' High (feat Raashan Ahmad)",
-                //     "artist": "Ancient Astronauts",
-                //     "album": "We Are to Answer",
-                //     "url": "https://p.scdn.co/mp3-preview/e001676375ea2b4807cee2f98b51f2f3fe0d109b",
-                //     "cover_art_url": "https://521dimensions.com/img/open-source/amplitudejs/album-art/we-are-to-answer.jpg"
-                // }
+            songs: [
+                {
+                    "name": "Risin' High (feat Raashan Ahmad)",
+                    "artist": "Ancient Astronauts",
+                    "album": "We Are to Answer",
+                    "url": "https://p.scdn.co/mp3-preview/641fd877ee0f42f3713d1649e20a9734cc64b8f9",
+                    "cover_art_url": "https://521dimensions.com/img/open-source/amplitudejs/album-art/we-are-to-answer.jpg"
+                }
             ],
-            waveforms: {
-                sample_rate: 50
+            callbacks: {
+                timeupdate : () => {
+                    console.log('播播播播播播播播播播播');
+                    console.log(this.amplitude.getSongPlayedPercentage());
+                },
+                stop: function(){
+                    console.log("Audio has been stopped.")
+                }
             }
         });
+
     }
 
     domEventInit() {
         this.controlPlay.addEventListener('click', () => {
+            // let value = 51;
+            // setInterval(() => {
+            //     console.log('怪怪怪怪怪怪怪怪怪怪');
+            //     value = value + 0.5;
+            //     console.log(value);
+            //     this.volumeRangeBar.setAttribute('value', value.toString());
+            // }, 500)
 
             const newSong = {
                 "name": "Risin' High (feat Raashan Ahmad)",
                 "artist": "Ancient Astronauts",
                 "album": "We Are to Answer",
                 "url": "https://p.scdn.co/mp3-preview/641fd877ee0f42f3713d1649e20a9734cc64b8f9",
-                "cover_art_url": "https://521dimensions.com/img/open-source/amplitudejs/album-art/we-are-to-answer.jpg",
-                "callbacks": {
-                    'time_update': function () {
-                        let songPlayedPercentage = this.amplitude.getSongPlayedPercentage();
-
-                        console.log('mmmmmmmmmmmmmmmmmmmm');
-                        console.log(songPlayedPercentage);
-                        /*
-                            SET YOUR ELEMENT HERE PERCENT WISE
-                        */
-                    }
-                },
-                "time_callbacks": {
-                    1: function () {
-                        console.log("1 second into the song")
-                    },
-                }
+                "cover_art_url": "https://521dimensions.com/img/open-source/amplitudejs/album-art/we-are-to-answer.jpg"
             };
 
             this.amplitude.playNow(newSong);
@@ -352,6 +381,9 @@ class Player extends HTMLElement {
             console.log(x);
             console.log(offset.width - x);
 
+            let value = parseFloat((x / offset.width)) * 100;
+
+            console.log(value);
 
             // this.amplitude.setSongPlayedPercentage((parseFloat(x) / parseFloat(this.offsetWidth)) * 100);
         }, false);
