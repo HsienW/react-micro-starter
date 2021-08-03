@@ -183,7 +183,7 @@ class Player extends HTMLElement {
             background: rgba(255, 255, 255, 0.6);
             border-radius: 5px;
             background-image: linear-gradient(#ff4500, #ff4500);
-            background-size: 70% 100%;
+            background-size: 50% 100%;
             background-repeat: no-repeat;
         }
         
@@ -395,6 +395,17 @@ class Player extends HTMLElement {
 
         this.volumeRangeBar.addEventListener('input', (event) => {
             this.amplitude.setVolume(event.target.value);
+
+            if (event.target.type !== 'range') {
+                event.target = document.getElementById('range')
+            }
+            const min = event.target.min
+            const max = event.target.max
+            const val = event.target.value
+
+            event.target.style.backgroundSize = (val - min) * 100 / (max - min) + '% 100%'
+
+
             console.log(this.amplitude.getSongPlayedSeconds());
             console.log(this.amplitude.getSongDuration());
         }, false);
