@@ -117,7 +117,6 @@ class Player extends HTMLElement {
         }
         
         .progress-area {
-            cursor: pointer;
             width: 100%;
             height: 30%;
             background-color: green;
@@ -127,6 +126,7 @@ class Player extends HTMLElement {
         }
         
         .progress-area>.progress-bar {
+            cursor: pointer;
             height: 4px;
             width: 100%;
         }
@@ -141,11 +141,9 @@ class Player extends HTMLElement {
         }
         
         .progress-area>input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            height: 10px;
-            width: 10px;
-            border-radius: 50%;
-            background: #434343;
+           -webkit-appearance: none;
+            height: 4px;
+            width: 4px;
             cursor: ew-resize;
             box-shadow: 0 0 2px 0 #555;
             transition: background 0.1s ease-in-out;
@@ -163,6 +161,7 @@ class Player extends HTMLElement {
             color: #ffffff;
             font-size: 12px;
             background-color: yellow;
+            text-align: center;
         }
         
         .volume-area {
@@ -218,7 +217,6 @@ class Player extends HTMLElement {
     }
 
     domRender() {
-
         console.log('看看看看看看看看看看看看看看看看看看看看看');
         console.log(this.amplitude);
 
@@ -240,7 +238,6 @@ class Player extends HTMLElement {
 
         this.progressArea = document.createElement('div');
         this.progressBar = document.createElement('input');
-        // this.progressBarConduct = document.createElement('div');
         this.progressPlayedSeconds = document.createElement('div');
         this.progressSongSeconds = document.createElement('div');
 
@@ -263,15 +260,9 @@ class Player extends HTMLElement {
         this.controlPlay.className = 'icon play';
         this.controlPause.className = 'icon pause';
         this.controlNext.className = 'icon next';
-        //
-        // <div className="progress">
-        //     <div className="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0"
-        //          aria-valuemax="100"></div>
-        // </div>
 
         this.progressArea.className = 'progress-area';
         this.progressBar.className = 'progress-bar';
-        // this.progressBarConduct.className = 'progress-bar-conduct';
         this.progressPlayedSeconds.className = 'progress-second';
         this.progressSongSeconds.className = 'progress-second';
 
@@ -279,19 +270,21 @@ class Player extends HTMLElement {
         this.volumeButton.className = 'icon volume-button';
         this.volumeRangeBar.className = 'volume-range-bar';
 
+        this.detailSongImage.setAttribute('src', 'https://i.scdn.co/image/21e1ebcd7ebd3b679d9d5084bba1e163638b103a');
+
         this.progressBar.setAttribute('amplitude-main-song-played-progress', 'true');
         this.progressBar.setAttribute('type', 'range');
         this.progressBar.setAttribute('min', '0');
         this.progressBar.setAttribute('max', '100');
         this.progressBar.setAttribute('step', '1');
         this.progressBar.setAttribute('value', '0');
-        //
+
+        this.volumeButton.setAttribute('src', 'https://music-player-demo-assets.s3.amazonaws.com/icon/volume.svg');
         this.volumeRangeBar.setAttribute('type', 'range');
         this.volumeRangeBar.setAttribute('min', '0');
         this.volumeRangeBar.setAttribute('max', '100');
         this.volumeRangeBar.setAttribute('step', '1');
         this.volumeRangeBar.setAttribute('value', '50');
-        this.detailSongImage.setAttribute('src', 'https://i.scdn.co/image/21e1ebcd7ebd3b679d9d5084bba1e163638b103a');
 
         this.controlRepeat.setAttribute('src', 'https://music-player-demo-assets.s3.amazonaws.com/icon/repeat.svg');
         this.controlPrev.setAttribute('src', 'https://music-player-demo-assets.s3.amazonaws.com/icon/prev.svg');
@@ -299,7 +292,6 @@ class Player extends HTMLElement {
         this.controlPlay.setAttribute('id', 'play-pause');
         this.controlNext.setAttribute('src', 'https://music-player-demo-assets.s3.amazonaws.com/icon/next.svg');
         this.controlShuffle.setAttribute('src', 'https://music-player-demo-assets.s3.amazonaws.com/icon/shuffle.svg');
-        this.volumeButton.setAttribute('src', 'https://music-player-demo-assets.s3.amazonaws.com/icon/volume.svg');
 
         this.detailSongName.textContent = 'The Best Of Keane (Deluxe Edition)';
         this.detailArtistName.textContent = 'Keane';
@@ -326,7 +318,6 @@ class Player extends HTMLElement {
         this.controlArea.appendChild(this.progressArea);
         this.progressArea.appendChild(this.progressPlayedSeconds);
         this.progressArea.appendChild(this.progressBar);
-        // this.progressBar.appendChild(this.progressBarConduct);
         this.progressArea.appendChild(this.progressSongSeconds);
 
         this.playerBody.appendChild(this.volumeArea);
@@ -343,24 +334,40 @@ class Player extends HTMLElement {
                     "album": "We Are to Answer",
                     "url": "https://p.scdn.co/mp3-preview/641fd877ee0f42f3713d1649e20a9734cc64b8f9",
                     "cover_art_url": "https://521dimensions.com/img/open-source/amplitudejs/album-art/we-are-to-answer.jpg"
+                },
+                {
+                    "name": "Money Changes Everything",
+                    "artist": "Cyndi Lauper",
+                    "album": "She's So Unusual",
+                    "url": "https://p.scdn.co/mp3-preview/01bb2a6c9a89c05a4300aea427241b1719a26b06",
+                    "cover_art_url": "https://i.scdn.co/image/54b3222c8aaa77890d1ac37b3aaaa1fc9ba630ae"
+                },
+                {
+                    "name": "Pyttefolk och tigerstekar i hängmattan",
+                    "artist": "Bronsåldersstadens kollaps",
+                    "album": "Hot Fuss",
+                    "url": "https://p.scdn.co/mp3-preview/7a785904a33e34b0b2bd382c82fca16be7060c36",
+                    "cover_art_url": "https://i.scdn.co/image/d49268a8fc0768084f4750cf1647709e89"
+                },
+                {
+                    "name": "Run Away With Me",
+                    "artist": "Carly Rae Jepsen",
+                    "album": "Emotion (Deluxe)",
+                    "url": "https://p.scdn.co/mp3-preview/3e05f5ed147ca075c7ae77c01f2cc0e14cfad78d?cid=774b29d4f13844c495f206cafdad9c86",
+                    "cover_art_url": "https://i.scdn.co/image/cc0797a99e21733caf0f4e23685a173033fdaa49"
                 }
             ],
             callbacks: {
                 timeupdate: () => {
-                    console.log('播播播播播播播播播播播');
-                    console.log(this.amplitude.getSongPlayedPercentage());
-
-                    const min = 0;
-                    const max = this.amplitude.getSongDuration();
-                    const val = this.amplitude.getSongPlayedSeconds();
-
-                    // let songPlayedTime = isNaN(this.amplitude.getSongPlayedPercentage()) ? '0' : this.amplitude.getSongPlayedPercentage();
-                    let songPlayedTime = isNaN(this.amplitude.getSongPlayedPercentage()) ? '0' : this.amplitude.getSongPlayedPercentage();
-                    this.inputBarChangeStyle(this.progressBar, min, max, val);
-                    this.progressBar.setAttribute('value', songPlayedTime.toString());
+                    const initTime = 0;
+                    const songTime = this.amplitude.getSongDuration();
+                    const playedTime = this.amplitude.getSongPlayedSeconds();
+                    this.updateProgressBarTime(playedTime, songTime);
+                    this.updateInputBarDisplay(this.progressBar, initTime, songTime, playedTime);
                 },
-                stop: function () {
+                stop: () => {
                     console.log("Audio has been stopped.")
+                    console.log(this.amplitude.getSongPlayedSeconds());
                 }
             }
         });
@@ -368,78 +375,57 @@ class Player extends HTMLElement {
     }
 
     domEventInit() {
+        this.controlRepeat.addEventListener('click', () => {
+            console.log("單曲循環");
+            this.amplitude.setRepeatSong();
+            // 開啟單曲循環後, 停止隨機播放
+            this.amplitude.setShuffle(false);
+        }, false);
+
+        this.controlPrev.addEventListener('click', () => {
+            this.amplitude.prev();
+        }, false);
+
         this.controlPlay.addEventListener('click', () => {
-            // let value = 51;
-            // setInterval(() => {
-            //     console.log('怪怪怪怪怪怪怪怪怪怪');
-            //     value = value + 0.5;
-            //     console.log(value);
-            //     this.volumeRangeBar.setAttribute('value', value.toString());
-            // }, 500)
-
-            const newSong = {
-                "name": "Risin' High (feat Raashan Ahmad)",
-                "artist": "Ancient Astronauts",
-                "album": "We Are to Answer",
-                "url": "https://p.scdn.co/mp3-preview/641fd877ee0f42f3713d1649e20a9734cc64b8f9",
-                "cover_art_url": "https://521dimensions.com/img/open-source/amplitudejs/album-art/we-are-to-answer.jpg"
-            };
-
-            this.amplitude.playNow(newSong);
-            // this.amplitude.play();
+            this.amplitude.play();
         }, false);
 
         this.controlNext.addEventListener('click', () => {
             this.amplitude.next();
+        }, false);
+
+        this.controlShuffle.addEventListener('click', () => {
+            console.log("隨機播放");
+            this.amplitude.setShuffle(true);
+            // 開啟隨機播放後, 停止單曲循環
+            this.amplitude.setRepeatSong(null);
         }, false);
 
         this.progressBar.addEventListener('input', (event) => {
-            const min = event.target.min
-            const max = event.target.max
-            const val = event.target.value
-
-            event.target.style.backgroundSize = (val - min) * 100 / (max - min) + '% 100%'
+            const {target} = event;
+            const playedPercentage = (target.value / target.max) * 100;
+            this.amplitude.setSongPlayedPercentage(playedPercentage)
+            this.updateInputBarDisplay(this.progressBar, target.min, target.max, target.value);
         }, false);
 
-        this.progressBar.addEventListener('mouseup', function (event) {
-            let offset = this.getBoundingClientRect();
-            let x = event.pageX - offset.left;
-
-            console.log('bbbbbbbbbbbbbbbbbbbbbbbbbbb');
-            // console.log(event.pageX);
-            // console.log(offset);
-            // console.log(x);
-            // console.log(offset.width - x);
-
-            let value = parseFloat((x / offset.width)) * 100;
-
-            console.log(value);
-
-            // this.amplitude.setSongPlayedPercentage((parseFloat(x) / parseFloat(this.offsetWidth)) * 100);
-        }, false);
-
-
-        this.controlNext.addEventListener('click', () => {
-            this.amplitude.next();
-        }, false);
-
+        // this.controlPause.addEventListener('click', () => {
+        //     // this.amplitude.pause();
+        // }, false);
 
         this.volumeRangeBar.addEventListener('input', (event) => {
+            const {target} = event;
             this.amplitude.setVolume(event.target.value);
-            const min = event.target.min
-            const max = event.target.max
-            const val = event.target.value
-
-            event.target.style.backgroundSize = (val - min) * 100 / (max - min) + '% 100%'
-
-
-            console.log(this.amplitude.getSongPlayedSeconds());
-            console.log(this.amplitude.getSongDuration());
+            this.updateInputBarDisplay(this.volumeRangeBar, target.min, target.max, target.value);
         }, false);
     }
 
-    inputBarChangeStyle(target, min, max, value) {
+    updateInputBarDisplay(target, min, max, value) {
         target.style.backgroundSize = (value - min) * 100 / (max - min) + '% 100%'
+    }
+
+    updateProgressBarTime(playedTime, totalTime) {
+        this.progressPlayedSeconds.textContent = new Date(playedTime * 1000).toISOString().substr(14, 5);
+        this.progressSongSeconds.textContent = new Date(totalTime * 1000).toISOString().substr(14, 5);
     }
 }
 
