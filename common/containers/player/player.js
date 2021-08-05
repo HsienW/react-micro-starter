@@ -232,6 +232,7 @@ class Player extends HTMLElement {
 
         this.controlArea = document.createElement('div');
         this.controlAreaButtons = document.createElement('div');
+        this.controlFakeAddPlay = document.createElement('img');
         this.controlRepeat = document.createElement('img');
         this.controlShuffle = document.createElement('img');
         this.controlPrev = document.createElement('img');
@@ -255,7 +256,8 @@ class Player extends HTMLElement {
         this.detailArtistName.className = 'song-artist';
 
         this.controlArea.className = 'controls-area';
-        this.controlAreaButtons.className = 'buttons'
+        this.controlAreaButtons.className = 'buttons';
+        this.controlFakeAddPlay.className = 'icon repeat';
         this.controlRepeat.className = 'icon repeat';
         this.controlShuffle.className = 'icon shuffle';
         this.controlPrev.className = 'icon prev';
@@ -288,6 +290,7 @@ class Player extends HTMLElement {
         this.volumeRangeBar.setAttribute('step', '1');
         this.volumeRangeBar.setAttribute('value', '50');
 
+        this.controlFakeAddPlay.setAttribute('src', '');
         this.controlRepeat.setAttribute('src', 'https://music-player-demo-assets.s3.amazonaws.com/icon/repeat.svg');
         this.controlPrev.setAttribute('src', 'https://music-player-demo-assets.s3.amazonaws.com/icon/prev.svg');
         this.controlPlay.setAttribute('src', 'https://music-player-demo-assets.s3.amazonaws.com/icon/play.svg');
@@ -310,6 +313,7 @@ class Player extends HTMLElement {
 
         this.playerBody.appendChild(this.controlArea);
         this.controlArea.appendChild(this.controlAreaButtons);
+        this.controlAreaButtons.appendChild(this.controlFakeAddPlay);
         this.controlAreaButtons.appendChild(this.controlRepeat);
         this.controlAreaButtons.appendChild(this.controlPrev);
         this.controlAreaButtons.appendChild(this.controlPlay);
@@ -368,35 +372,48 @@ class Player extends HTMLElement {
                     this.updateInputBarDisplay(this.progressBar, initTime, songTime, playedTime);
                 },
                 prev: () => {
-                    console.log("上一首111111")
+                    console.log("上一首111111");
                     // 上一首等於重新播放, 切換顯示暫停按鈕
                     this.updateDomDisplayStyle(this.controlPlay, this.controlPause, 'hidden');
                 },
                 play: () => {
-                    console.log("播放111111")
+                    console.log("播放111111");
                     // 播放後切換顯示暫停按鈕
                     this.updateDomDisplayStyle(this.controlPlay, this.controlPause, 'hidden');
                 },
                 pause: () => {
-                    console.log("暫停111111")
+                    console.log("暫停111111");
                     // 暫停後切換顯示播放按鈕
                     this.updateDomDisplayStyle(this.controlPause, this.controlPlay, 'hidden');
                 },
                 stop: () => {
-                    console.log("停止111111")
+                    console.log("停止111111");
                     this.updateDomDisplayStyle(this.controlPause, this.controlPlay, 'hidden');
                 },
                 next: () => {
-                    console.log("下一首111111")
+                    console.log("下一首111111");
                     // 下一首等於重新播放, 切換顯示暫停按鈕
                     this.updateDomDisplayStyle(this.controlPlay, this.controlPause, 'hidden');
                 }
             }
         });
-
     }
 
     domEventInit() {
+        this.controlFakeAddPlay.addEventListener('click', () => {
+            console.log("增加播放")
+
+            this.amplitude.addSong(
+                {
+                    "name": "Anthem",
+                    "artist": "Emancipator",
+                    "album": "Soon It Will Be Cold Enough",
+                    "url": "https://521dimensions.com/songs/Anthem-Emancipator.mp3",
+                    "cover_art_url": "https://521dimensions.com/img/open-source/amplitudejs/album-art/soon-it-will-be-cold-enough.jpg"
+                }
+            );
+        }, false);
+
         this.controlRepeat.addEventListener('click', () => {
             console.log("單曲循環");
             this.amplitude.setRepeatSong();
@@ -421,9 +438,12 @@ class Player extends HTMLElement {
 
         this.controlNext.addEventListener('click', () => {
             this.amplitude.next();
-            console.log(this.amplitude.getActiveIndex());
-            console.log(this.amplitude.getActivePlaylist());
-            console.log(this.amplitude.getActivePlaylistMetadata());
+
+            // 下一首到最底, 跳回第一首
+            let currentSongIndex = this.amplitude.getActiveIndex();
+            if (currentSongIndex === 0) {
+                this.amplitude.skipTo(0, 0);
+            }
         }, false);
 
         this.controlShuffle.addEventListener('click', () => {
