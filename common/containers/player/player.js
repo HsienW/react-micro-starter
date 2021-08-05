@@ -417,10 +417,9 @@ class Player extends HTMLElement {
         this.controlRepeat.addEventListener('click', () => {
             console.log("單曲循環");
             this.amplitude.setRepeatSong();
-            // 開啟單曲循環後, 停止隨機播放
-            this.amplitude.setShuffle(false);
             this.updateDomActiveStyle(this.controlRepeat, 'icon-active', 'icon-active');
-            // 開啟單曲循環後, 消除隨機播放的激活
+            // 開啟單曲循環後, 停止隨機播放 & 消除 icon 激活
+            this.amplitude.setShuffle(false);
             this.controlShuffle.classList.remove('icon-active');
         }, false);
 
@@ -449,10 +448,9 @@ class Player extends HTMLElement {
         this.controlShuffle.addEventListener('click', () => {
             console.log("隨機播放");
             this.amplitude.setShuffle(true);
-            // 開啟隨機播放後, 停止單曲循環
-            this.amplitude.setRepeatSong(null);
             this.updateDomActiveStyle(this.controlShuffle, 'icon-active', 'icon-active');
-            // 開啟隨機播放後, 消除單曲循環的激活
+            // 開啟隨機播放後, 停止單曲循環 & 消除 icon 激活
+            this.amplitude.setRepeatSong(null);
             this.controlRepeat.classList.remove('icon-active');
         }, false);
 
