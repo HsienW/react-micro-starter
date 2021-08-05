@@ -378,6 +378,10 @@ class Player extends HTMLElement {
                 },
                 play: () => {
                     console.log("播放111111");
+                    // 播放後切換顯示歌曲資訊
+                    const songMetaData = this.amplitude.getActiveSongMetadata();
+                    this.updateDomTextContent(this.detailSongName, songMetaData.name);
+                    this.updateDomTextContent(this.detailArtistName, songMetaData.artist);
                     // 播放後切換顯示暫停按鈕
                     this.updateDomDisplayStyle(this.controlPlay, this.controlPause, 'hidden');
                 },
@@ -479,6 +483,10 @@ class Player extends HTMLElement {
         } else {
             target.classList.remove(styleName);
         }
+    }
+
+    updateDomTextContent(target, value) {
+        target.textContent = value;
     }
 
     updateInputBarDisplay(target, min, max, value) {
