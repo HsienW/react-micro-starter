@@ -7,8 +7,8 @@ class Player extends HTMLElement {
         this.amplitude = amplitude;
         this.domStyling();
         this.domRender();
-        this.playerConfigInit();
         this.domEventInit();
+        this.playerConfigInit();
     }
 
     domStyling() {
@@ -114,6 +114,10 @@ class Player extends HTMLElement {
         
         .controls-area>.buttons>.icon-active {
             filter: invert(17%) sepia(95%) saturate(1414%) hue-rotate(197deg) brightness(101%) contrast(113%);
+        }
+        
+        .controls-area>.buttons>.hidden {
+            display: none;
         }
         
         .progress-area {
@@ -256,7 +260,7 @@ class Player extends HTMLElement {
         this.controlShuffle.className = 'icon shuffle';
         this.controlPrev.className = 'icon prev';
         this.controlPlay.className = 'icon play';
-        this.controlPause.className = 'icon pause';
+        this.controlPause.className = 'icon pause hidden';
         this.controlNext.className = 'icon next';
 
         this.progressArea.className = 'progress-area';
@@ -289,7 +293,6 @@ class Player extends HTMLElement {
         this.controlPlay.setAttribute('src', 'https://music-player-demo-assets.s3.amazonaws.com/icon/play.svg');
         this.controlPlay.setAttribute('id', 'play-pause');
         this.controlPause.setAttribute('src', 'https://music-player-demo-assets.s3.amazonaws.com/icon/pause.svg');
-        this.controlPause.setAttribute('style', 'display: none');
         this.controlNext.setAttribute('src', 'https://music-player-demo-assets.s3.amazonaws.com/icon/next.svg');
         this.controlShuffle.setAttribute('src', 'https://music-player-demo-assets.s3.amazonaws.com/icon/shuffle.svg');
 
@@ -364,9 +367,29 @@ class Player extends HTMLElement {
                     this.updateProgressBarTime(playedTime, songTime);
                     this.updateInputBarDisplay(this.progressBar, initTime, songTime, playedTime);
                 },
+                prev: () => {
+                    console.log("上一首111111")
+                    // 上一首等於重新播放, 切換顯示暫停按鈕
+                    this.updateDomDisplayStyle(this.controlPlay, this.controlPause, 'hidden');
+                },
+                play: () => {
+                    console.log("播放111111")
+                    // 播放後切換顯示暫停按鈕
+                    this.updateDomDisplayStyle(this.controlPlay, this.controlPause, 'hidden');
+                },
+                pause: () => {
+                    console.log("暫停111111")
+                    // 暫停後切換顯示播放按鈕
+                    this.updateDomDisplayStyle(this.controlPause, this.controlPlay, 'hidden');
+                },
                 stop: () => {
-                    console.log("Audio has been stopped.")
-                    console.log(this.amplitude.getSongPlayedSeconds());
+                    console.log("停止111111")
+                    this.updateDomDisplayStyle(this.controlPause, this.controlPlay, 'hidden');
+                },
+                next: () => {
+                    console.log("下一首111111")
+                    // 下一首等於重新播放, 切換顯示暫停按鈕
+                    this.updateDomDisplayStyle(this.controlPlay, this.controlPause, 'hidden');
                 }
             }
         });
@@ -376,10 +399,12 @@ class Player extends HTMLElement {
     domEventInit() {
         this.controlRepeat.addEventListener('click', () => {
             console.log("單曲循環");
-            this.controlRepeat.classList.add('icon-active');
             this.amplitude.setRepeatSong();
             // 開啟單曲循環後, 停止隨機播放
             this.amplitude.setShuffle(false);
+            this.updateDomActiveStyle(this.controlRepeat, 'icon-active', 'icon-active');
+            // 開啟單曲循環後, 消除隨機播放的激活
+            this.controlShuffle.classList.remove('icon-active');
         }, false);
 
         this.controlPrev.addEventListener('click', () => {
@@ -387,19 +412,18 @@ class Player extends HTMLElement {
         }, false);
 
         this.controlPlay.addEventListener('click', () => {
-            this.controlPlay.setAttribute('style', 'display: none');
-            this.controlPause.removeAttribute('style');
             this.amplitude.play();
         }, false);
 
         this.controlPause.addEventListener('click', () => {
-            this.controlPause.setAttribute('style', 'display: none');
-            this.controlPlay.removeAttribute('style');
             this.amplitude.pause();
         }, false);
 
         this.controlNext.addEventListener('click', () => {
             this.amplitude.next();
+            console.log(this.amplitude.getActiveIndex());
+            console.log(this.amplitude.getActivePlaylist());
+            console.log(this.amplitude.getActivePlaylistMetadata());
         }, false);
 
         this.controlShuffle.addEventListener('click', () => {
@@ -407,6 +431,9 @@ class Player extends HTMLElement {
             this.amplitude.setShuffle(true);
             // 開啟隨機播放後, 停止單曲循環
             this.amplitude.setRepeatSong(null);
+            this.updateDomActiveStyle(this.controlShuffle, 'icon-active', 'icon-active');
+            // 開啟隨機播放後, 消除單曲循環的激活
+            this.controlRepeat.classList.remove('icon-active');
         }, false);
 
         this.progressBar.addEventListener('input', (event) => {
@@ -421,6 +448,19 @@ class Player extends HTMLElement {
             this.amplitude.setVolume(event.target.value);
             this.updateInputBarDisplay(this.volumeRangeBar, target.min, target.max, target.value);
         }, false);
+    }
+
+    updateDomDisplayStyle(addStyleTarget, removeStyleTarget, styleName) {
+        addStyleTarget.classList.add(styleName);
+        removeStyleTarget.classList.remove(styleName);
+    }
+
+    updateDomActiveStyle(target, condition, styleName) {
+        if (!target.classList.contains(condition)) {
+            target.classList.add(styleName);
+        } else {
+            target.classList.remove(styleName);
+        }
     }
 
     updateInputBarDisplay(target, min, max, value) {
