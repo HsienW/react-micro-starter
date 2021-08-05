@@ -94,16 +94,11 @@ class Player extends HTMLElement {
             height: 20px;
             cursor: pointer;
             padding: 0 6px;
-            filter: invert(24%) sepia(0%) saturate(2973%) hue-rotate(316deg) brightness(91%) contrast(84%);
+            filter: invert(25%) sepia(4%) saturate(9%) hue-rotate(13deg) brightness(98%) contrast(92%);
         }
         
         .controls-area>.buttons>.icon:hover {
             color: #f33336;
-        }
-        
-        .controls-area>.buttons>.icon.pause,
-        .controls-area>.buttons>.icon.repeat-one {
-            display: none;
         }
         
         .controls-area>.buttons>.repeat {
@@ -111,9 +106,14 @@ class Player extends HTMLElement {
             height: 18px;
         }
         
-        .controls-area>.buttons>.icon.play {
+         .controls-area>.buttons>.icon.play,
+         .controls-area>.buttons>.icon.pause {
             width: 28px;
             height: 28px;
+        }
+        
+        .controls-area>.buttons>.icon-active {
+            filter: invert(17%) sepia(95%) saturate(1414%) hue-rotate(197deg) brightness(101%) contrast(113%);
         }
         
         .progress-area {
@@ -158,7 +158,7 @@ class Player extends HTMLElement {
         
         .progress-area>.progress-second {
             width: 40px;
-            color: #ffffff;
+            color: #262626;
             font-size: 12px;
             background-color: yellow;
             text-align: center;
@@ -229,7 +229,6 @@ class Player extends HTMLElement {
         this.controlArea = document.createElement('div');
         this.controlAreaButtons = document.createElement('div');
         this.controlRepeat = document.createElement('img');
-        this.controlRepeatOne = document.createElement('img');
         this.controlShuffle = document.createElement('img');
         this.controlPrev = document.createElement('img');
         this.controlPlay = document.createElement('img');
@@ -254,7 +253,6 @@ class Player extends HTMLElement {
         this.controlArea.className = 'controls-area';
         this.controlAreaButtons.className = 'buttons'
         this.controlRepeat.className = 'icon repeat';
-        this.controlRepeatOne.className = 'icon repeat-one';
         this.controlShuffle.className = 'icon shuffle';
         this.controlPrev.className = 'icon prev';
         this.controlPlay.className = 'icon play';
@@ -290,6 +288,8 @@ class Player extends HTMLElement {
         this.controlPrev.setAttribute('src', 'https://music-player-demo-assets.s3.amazonaws.com/icon/prev.svg');
         this.controlPlay.setAttribute('src', 'https://music-player-demo-assets.s3.amazonaws.com/icon/play.svg');
         this.controlPlay.setAttribute('id', 'play-pause');
+        this.controlPause.setAttribute('src', 'https://music-player-demo-assets.s3.amazonaws.com/icon/pause.svg');
+        this.controlPause.setAttribute('style', 'display: none');
         this.controlNext.setAttribute('src', 'https://music-player-demo-assets.s3.amazonaws.com/icon/next.svg');
         this.controlShuffle.setAttribute('src', 'https://music-player-demo-assets.s3.amazonaws.com/icon/shuffle.svg');
 
@@ -308,7 +308,6 @@ class Player extends HTMLElement {
         this.playerBody.appendChild(this.controlArea);
         this.controlArea.appendChild(this.controlAreaButtons);
         this.controlAreaButtons.appendChild(this.controlRepeat);
-        this.controlAreaButtons.appendChild(this.controlRepeatOne);
         this.controlAreaButtons.appendChild(this.controlPrev);
         this.controlAreaButtons.appendChild(this.controlPlay);
         this.controlAreaButtons.appendChild(this.controlPause);
@@ -377,6 +376,7 @@ class Player extends HTMLElement {
     domEventInit() {
         this.controlRepeat.addEventListener('click', () => {
             console.log("單曲循環");
+            this.controlRepeat.classList.add('icon-active');
             this.amplitude.setRepeatSong();
             // 開啟單曲循環後, 停止隨機播放
             this.amplitude.setShuffle(false);
@@ -387,7 +387,15 @@ class Player extends HTMLElement {
         }, false);
 
         this.controlPlay.addEventListener('click', () => {
+            this.controlPlay.setAttribute('style', 'display: none');
+            this.controlPause.removeAttribute('style');
             this.amplitude.play();
+        }, false);
+
+        this.controlPause.addEventListener('click', () => {
+            this.controlPause.setAttribute('style', 'display: none');
+            this.controlPlay.removeAttribute('style');
+            this.amplitude.pause();
         }, false);
 
         this.controlNext.addEventListener('click', () => {
@@ -407,10 +415,6 @@ class Player extends HTMLElement {
             this.amplitude.setSongPlayedPercentage(playedPercentage)
             this.updateInputBarDisplay(this.progressBar, target.min, target.max, target.value);
         }, false);
-
-        // this.controlPause.addEventListener('click', () => {
-        //     // this.amplitude.pause();
-        // }, false);
 
         this.volumeRangeBar.addEventListener('input', (event) => {
             const {target} = event;
