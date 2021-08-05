@@ -1,6 +1,6 @@
 import amplitude from 'amplitudejs';
 
-class Player extends HTMLElement {
+class PlayerBar extends HTMLElement {
     constructor() {
         super();
         this.shadow = this.attachShadow({mode: 'open'});
@@ -14,19 +14,22 @@ class Player extends HTMLElement {
     domStyling() {
         let style = document.createElement('style');
         style.textContent = `
-        .player {
+        .hidden {
+            display: none;
+        }
+        
+        .player-bar {
             width: 100%;
             height: 100%;
-            background-color: red;
             display: flex;
             justify-content: space-between;
+            background-color: #40a9ff;
         }
         
         .detail-area {
             width: 20%;
             height: 100%;
             min-width: 300px;
-            background-color: green;
             padding: 0 10px;
             display: grid;
             grid-template-columns: 64px auto;
@@ -44,7 +47,6 @@ class Player extends HTMLElement {
             grid-row-start: 2;
             width: 64px;
             height: 64px;
-            background-color: blue;
         }
         
         .detail-area>.song-name {
@@ -54,7 +56,7 @@ class Player extends HTMLElement {
             font-size: 16px;
             font-weight: 600;
             padding: 0 10px;
-            color: rgba(0, 0, 0, 0.85);
+            color: #262626;
         }
         
         .detail-area>.song-artist {
@@ -63,7 +65,7 @@ class Player extends HTMLElement {
             width: calc(100% - 64px);
             font-size: 14px;
             padding: 0 10px;
-            color: (0, 0, 0, 0.45);
+            color: #434343;
         }
         
         .detail-area>div {
@@ -76,14 +78,12 @@ class Player extends HTMLElement {
             width: 30%;
             height: 100%;
             min-width: 400px;
-            background-color: blue;
             padding: 0 10px;
         }
         
         .controls-area>.buttons {
             width: 100%;
             height: 70%;
-            background-color: gray;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -113,17 +113,12 @@ class Player extends HTMLElement {
         }
         
         .controls-area>.buttons>.icon-active {
-            filter: invert(17%) sepia(95%) saturate(1414%) hue-rotate(197deg) brightness(101%) contrast(113%);
-        }
-        
-        .controls-area>.buttons>.hidden {
-            display: none;
+            filter: invert(12%) sepia(78%) saturate(6825%) hue-rotate(204deg) brightness(89%) contrast(107%);
         }
         
         .progress-area {
             width: 100%;
             height: 30%;
-            background-color: green;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -131,7 +126,7 @@ class Player extends HTMLElement {
         
         .progress-area>.progress-bar {
             cursor: pointer;
-            height: 4px;
+            height: 5px;
             width: 100%;
         }
         
@@ -139,16 +134,16 @@ class Player extends HTMLElement {
             -webkit-appearance: none;
             background: rgba(255, 255, 255, 0.6);
             border-radius: 5px;
-            background-image: linear-gradient(#434343, #434343);
+            background-image: linear-gradient(#595959, #595959);
             background-size: 0% 100%;
             background-repeat: no-repeat;
         }
         
         .progress-area>input[type="range"]::-webkit-slider-thumb {
            -webkit-appearance: none;
-            height: 4px;
-            width: 4px;
-            cursor: ew-resize;
+            height: 5px;
+            width: 5px;
+            cursor: pointer;
             box-shadow: 0 0 2px 0 #555;
             transition: background 0.1s ease-in-out;
         }
@@ -163,16 +158,15 @@ class Player extends HTMLElement {
         .progress-area>.progress-second {
             width: 40px;
             color: #262626;
-            font-size: 12px;
-            background-color: yellow;
+            font-size: 14px;
             text-align: center;
+            font-weight: 400;
         }
         
         .volume-area {
             width: 20%;
             height: 100%;
             min-width: 300px;
-            background-color: yellow;
             padding: 0 10px;
             display: flex;
             justify-content: flex-end;
@@ -182,18 +176,18 @@ class Player extends HTMLElement {
         .volume-area>.volume-range-bar {
             height: 4px;
             width: 30%;
-            background-color: blue;
             border: 0;
         }
         
         .volume-area>.volume-button {
+            cursor: default;
         }
         
         .volume-area>input[type="range"] {
             -webkit-appearance: none;
             background: rgba(255, 255, 255, 0.6);
             border-radius: 5px;
-            background-image: linear-gradient(#ff4500, #ff4500);
+            background-image: linear-gradient(#096dd9, #096dd9);
             background-size: 50% 100%;
             background-repeat: no-repeat;
         }
@@ -203,8 +197,8 @@ class Player extends HTMLElement {
             height: 14px;
             width: 14px;
             border-radius: 50%;
-            background: #ff4500;
-            cursor: ew-resize;
+            background: #096dd9;
+            cursor: pointer;
             box-shadow: 0 0 2px 0 #555;
             transition: background .3s ease-in-out;
         }
@@ -224,7 +218,7 @@ class Player extends HTMLElement {
         console.log('看看看看看看看看看看看看看看看看看看看看看');
         console.log(this.amplitude);
 
-        this.playerBody = document.createElement('div');
+        this.playerBarBody = document.createElement('div');
         this.detailArea = document.createElement('div');
         this.detailSongImage = document.createElement('img');
         this.detailSongName = document.createElement('div');
@@ -249,9 +243,9 @@ class Player extends HTMLElement {
         this.volumeButton = document.createElement('img');
         this.volumeRangeBar = document.createElement('input');
 
-        this.playerBody.className = 'player';
+        this.playerBarBody.className = 'player-bar';
         this.detailArea.className = 'detail-area';
-        this.detailSongImage.className = 'song-image';
+        this.detailSongImage.className = 'song-image hidden';
         this.detailSongName.className = 'song-name';
         this.detailArtistName.className = 'song-artist';
 
@@ -274,7 +268,7 @@ class Player extends HTMLElement {
         this.volumeButton.className = 'icon volume-button';
         this.volumeRangeBar.className = 'volume-range-bar';
 
-        this.detailSongImage.setAttribute('src', 'https://i.scdn.co/image/21e1ebcd7ebd3b679d9d5084bba1e163638b103a');
+        this.detailSongImage.setAttribute('src', '');
 
         this.progressBar.setAttribute('amplitude-main-song-played-progress', 'true');
         this.progressBar.setAttribute('type', 'range');
@@ -299,19 +293,19 @@ class Player extends HTMLElement {
         this.controlNext.setAttribute('src', 'https://music-player-demo-assets.s3.amazonaws.com/icon/next.svg');
         this.controlShuffle.setAttribute('src', 'https://music-player-demo-assets.s3.amazonaws.com/icon/shuffle.svg');
 
-        this.detailSongName.textContent = 'The Best Of Keane (Deluxe Edition)';
-        this.detailArtistName.textContent = 'Keane';
+        this.detailSongName.textContent = '';
+        this.detailArtistName.textContent = '';
 
         this.progressPlayedSeconds.textContent = '00:00';
         this.progressSongSeconds.textContent = '00:00';
 
-        this.shadow.appendChild(this.playerBody);
-        this.playerBody.appendChild(this.detailArea);
+        this.shadow.appendChild(this.playerBarBody);
+        this.playerBarBody.appendChild(this.detailArea);
         this.detailArea.appendChild(this.detailSongImage);
         this.detailArea.appendChild(this.detailSongName);
         this.detailArea.appendChild(this.detailArtistName);
 
-        this.playerBody.appendChild(this.controlArea);
+        this.playerBarBody.appendChild(this.controlArea);
         this.controlArea.appendChild(this.controlAreaButtons);
         this.controlAreaButtons.appendChild(this.controlFakeAddPlay);
         this.controlAreaButtons.appendChild(this.controlRepeat);
@@ -326,7 +320,7 @@ class Player extends HTMLElement {
         this.progressArea.appendChild(this.progressBar);
         this.progressArea.appendChild(this.progressSongSeconds);
 
-        this.playerBody.appendChild(this.volumeArea);
+        this.playerBarBody.appendChild(this.volumeArea);
         this.volumeArea.appendChild(this.volumeButton);
         this.volumeArea.appendChild(this.volumeRangeBar);
     }
@@ -353,7 +347,7 @@ class Player extends HTMLElement {
                     "artist": "Bronsåldersstadens kollaps",
                     "album": "Hot Fuss",
                     "url": "https://p.scdn.co/mp3-preview/7a785904a33e34b0b2bd382c82fca16be7060c36",
-                    "cover_art_url": "https://i.scdn.co/image/d49268a8fc0768084f4750cf1647709e89"
+                    "cover_art_url": "https://521dimensions.com/img/open-source/amplitudejs/album-art/guidance.jpg"
                 },
                 {
                     "name": "Run Away With Me",
@@ -380,6 +374,7 @@ class Player extends HTMLElement {
                     console.log("播放111111");
                     // 播放後切換顯示歌曲資訊
                     const songMetaData = this.amplitude.getActiveSongMetadata();
+                    this.updateDomImgDisplay(this.detailSongImage, songMetaData.cover_art_url);
                     this.updateDomTextContent(this.detailSongName, songMetaData.name);
                     this.updateDomTextContent(this.detailArtistName, songMetaData.artist);
                     // 播放後切換顯示暫停按鈕
@@ -489,6 +484,11 @@ class Player extends HTMLElement {
         target.textContent = value;
     }
 
+    updateDomImgDisplay(target, value) {
+        target.classList.remove('hidden');
+        target.setAttribute('src', value);
+    }
+
     updateInputBarDisplay(target, min, max, value) {
         target.style.backgroundSize = (value - min) * 100 / (max - min) + '% 100%'
     }
@@ -499,8 +499,8 @@ class Player extends HTMLElement {
     }
 }
 
-customElements.define('player-container', Player);
+customElements.define('player-bar-container', PlayerBar);
 
 export {
-    Player
+    PlayerBar
 }
