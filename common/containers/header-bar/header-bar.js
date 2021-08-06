@@ -15,10 +15,10 @@ class HeaderBar extends HTMLElement {
             background: #ffffff;
             width: 100%;
             height: 100%;
-            border-bottom: 1px solid #d9d9d9;
             display: flex;
             justify-content: space-between;
             align-content: center;
+            outline: 1px solid #d9d9d9;
         }
         
         .logo-area {

@@ -19,7 +19,7 @@ class Auth extends HTMLElement {
             z-index: 4;
             width: 100%;
             height: 100%;
-            background-color: rgba(51, 51, 51, 0.8);
+            background-color: rgba(51, 51, 51, 0.95);
         }
         
         .auth-page {
@@ -76,20 +76,20 @@ class Auth extends HTMLElement {
         
         .form .form-title {
             margin: 0 0 0.8rem 0;
-            color: rgba(0, 0, 0, 0.65);
+            color: #595959;
             font-size: 1.75rem;
             font-weight: 700;
         }
         
         .form .form-sub-title {
             margin: 0.8rem; 0 0;
-            color: rgba(0, 0, 0, 0.45);
+            color: #bfbfbf;
             font-size: 0.85rem;
         }
         
         .form .description {
             margin: 0.8rem; 0 0;
-            color: rgba(0, 0, 0, 0.45);
+            color: #bfbfbf;
             font-size: 0.75rem;
         }
         

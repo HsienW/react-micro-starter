@@ -23,7 +23,7 @@ class PlayerBar extends HTMLElement {
             height: 100%;
             display: flex;
             justify-content: space-between;
-            background-color: #40a9ff;
+            outline: 1px solid #d9d9d9;
         }
         
         .detail-area {
@@ -54,9 +54,9 @@ class PlayerBar extends HTMLElement {
             grid-row-start: 3;
             width: calc(100% - 64px);
             font-size: 16px;
-            font-weight: 600;
+            font-weight: 700;
             padding: 0 10px;
-            color: #262626;
+            color: #1890ff;
         }
         
         .detail-area>.song-artist {
@@ -90,11 +90,11 @@ class PlayerBar extends HTMLElement {
         }
         
         .icon {
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             cursor: pointer;
             padding: 0 6px;
-            filter: invert(25%) sepia(4%) saturate(9%) hue-rotate(13deg) brightness(98%) contrast(92%);
+            filter: invert(33%) sepia(3%) saturate(0%) hue-rotate(339deg) brightness(93%) contrast(79%);
         }
         
         .controls-area>.buttons>.icon:hover {
@@ -102,18 +102,19 @@ class PlayerBar extends HTMLElement {
         }
         
         .controls-area>.buttons>.repeat {
-            width: 18px;
-            height: 18px;
+            width: 16px;
+            height: 16px;
         }
         
          .controls-area>.buttons>.icon.play,
          .controls-area>.buttons>.icon.pause {
-            width: 28px;
-            height: 28px;
+            width: 32px;
+            height: 32px;
+            filter: invert(41%) sepia(93%) saturate(2568%) hue-rotate(194deg) brightness(104%) contrast(101%);
         }
         
         .controls-area>.buttons>.icon-active {
-            filter: invert(12%) sepia(78%) saturate(6825%) hue-rotate(204deg) brightness(89%) contrast(107%);
+            filter: invert(41%) sepia(93%) saturate(2568%) hue-rotate(194deg) brightness(104%) contrast(101%);
         }
         
         .progress-area {
@@ -126,14 +127,14 @@ class PlayerBar extends HTMLElement {
         
         .progress-area>.progress-bar {
             cursor: pointer;
-            height: 5px;
+            height: 4px;
             width: 100%;
         }
         
          .progress-area>input[type="range"] {
             -webkit-appearance: none;
-            background: rgba(255, 255, 255, 0.6);
-            border-radius: 5px;
+            background: #bfbfbf;
+            border-radius: 4px;
             background-image: linear-gradient(#595959, #595959);
             background-size: 0% 100%;
             background-repeat: no-repeat;
@@ -141,8 +142,8 @@ class PlayerBar extends HTMLElement {
         
         .progress-area>input[type="range"]::-webkit-slider-thumb {
            -webkit-appearance: none;
-            height: 5px;
-            width: 5px;
+            height: 0px;
+            width: 0px;
             cursor: pointer;
             box-shadow: 0 0 2px 0 #555;
             transition: background 0.1s ease-in-out;
@@ -157,10 +158,10 @@ class PlayerBar extends HTMLElement {
         
         .progress-area>.progress-second {
             width: 40px;
-            color: #262626;
-            font-size: 14px;
+            color: #595959;
+            font-size: 12px;
             text-align: center;
-            font-weight: 400;
+            font-weight: 600;
         }
         
         .volume-area {
@@ -185,9 +186,9 @@ class PlayerBar extends HTMLElement {
         
         .volume-area>input[type="range"] {
             -webkit-appearance: none;
-            background: rgba(255, 255, 255, 0.6);
+            background: #bfbfbf;
             border-radius: 5px;
-            background-image: linear-gradient(#096dd9, #096dd9);
+            background-image: linear-gradient(#1890ff, #1890ff);
             background-size: 50% 100%;
             background-repeat: no-repeat;
         }
@@ -197,7 +198,7 @@ class PlayerBar extends HTMLElement {
             height: 14px;
             width: 14px;
             border-radius: 50%;
-            background: #096dd9;
+            background: #1890ff;
             cursor: pointer;
             box-shadow: 0 0 2px 0 #555;
             transition: background .3s ease-in-out;
