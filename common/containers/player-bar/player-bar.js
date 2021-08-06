@@ -65,7 +65,7 @@ class PlayerBar extends HTMLElement {
             width: calc(100% - 64px);
             font-size: 14px;
             padding: 0 10px;
-            color: #434343;
+            color: #595959;
         }
         
         .detail-area>div {
@@ -90,8 +90,8 @@ class PlayerBar extends HTMLElement {
         }
         
         .icon {
-            width: 18px;
-            height: 18px;
+            width: 16px;
+            height: 16px;
             cursor: pointer;
             padding: 0 6px;
             filter: invert(33%) sepia(3%) saturate(0%) hue-rotate(339deg) brightness(93%) contrast(79%);
@@ -101,10 +101,10 @@ class PlayerBar extends HTMLElement {
             color: #f33336;
         }
         
-        .controls-area>.buttons>.repeat {
-            width: 16px;
-            height: 16px;
-        }
+        // .controls-area>.buttons>.repeat {
+        //     width: 16px;
+        //     height: 16px;
+        // }
         
          .controls-area>.buttons>.icon.play,
          .controls-area>.buttons>.icon.pause {
@@ -145,7 +145,7 @@ class PlayerBar extends HTMLElement {
             height: 0px;
             width: 0px;
             cursor: pointer;
-            box-shadow: 0 0 2px 0 #555;
+            box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12);
             transition: background 0.1s ease-in-out;
         }
         
@@ -416,9 +416,10 @@ class PlayerBar extends HTMLElement {
 
         this.controlRepeat.addEventListener('click', () => {
             console.log("單曲循環");
+            // 開啟單曲循環
             this.amplitude.setRepeatSong();
             this.updateDomActiveStyle(this.controlRepeat, 'icon-active', 'icon-active');
-            // 開啟單曲循環後, 停止隨機播放 & 消除 icon 激活
+            // 開啟單曲循環後, 先停止隨機播放 & 消除 icon 激活
             this.amplitude.setShuffle(false);
             this.controlShuffle.classList.remove('icon-active');
         }, false);
@@ -443,10 +444,13 @@ class PlayerBar extends HTMLElement {
             if (currentSongIndex === 0) {
                 this.amplitude.skipTo(0, 0);
             }
+
+            this.amplitude.play();
         }, false);
 
         this.controlShuffle.addEventListener('click', () => {
             console.log("隨機播放");
+            // 開啟隨機播放
             this.amplitude.setShuffle(true);
             this.updateDomActiveStyle(this.controlShuffle, 'icon-active', 'icon-active');
             // 開啟隨機播放後, 停止單曲循環 & 消除 icon 激活

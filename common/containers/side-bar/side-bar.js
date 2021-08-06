@@ -39,7 +39,7 @@ class SideBar extends HTMLElement {
         }
         
         .side-bar ul li a {
-            color: #9c9c9c;
+            color: #8c8c8c
             text-decoration: none;
             font-size: 15px;
             display: block;
@@ -55,7 +55,6 @@ class SideBar extends HTMLElement {
         .side-bar>ul>li>ul>li>ul>li>ul>li>ul.side-bar-menu>li.active>a {
             background-color: #e6f7ff;
             color: #1890ff;
-            box-shadow: 0px 1px 2px rgba(0, 137, 255, 0.2);
         }
         
         .side-bar>ul>li>ul,
