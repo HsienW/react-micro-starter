@@ -9,24 +9,24 @@ class LoadingSpin extends HTMLElement {
     domStyling() {
         let style = document.createElement('style');
         style.textContent = `
-        // .hidden {
-        //     display: none !important;
-        // }
+        .hidden {
+            display: none;
+        }
         
         .loading-spin-backdrop {
+        }
+        
+        .loading-spin-area {
             position: absolute;
             top: 0;
             left: 0;
             z-index: 4;
             width: 100%;
             height: 100%;
-            background-color: rgba(51, 51, 51, 0.95);
+            background-color: rgba(51, 51, 51, 0.75);
             display: flex;
             justify-content: center;
             align-items: center;
-        }
-        
-        .loading-spin-area {
         }
         
         .loading-spin-dot {
@@ -100,7 +100,7 @@ class LoadingSpin extends HTMLElement {
         this.loadItemBottom = document.createElement('i');
         this.loadItemLeft = document.createElement('i');
 
-        this.loadingSpinBody.className = 'loading-spin-backdrop';
+        this.loadingSpinBody.className = 'loading-spin-backdrop hidden';
         this.spinArea.className = 'loading-spin-area';
         this.spinLoad.className = 'loading-spin-dot loading-spin-dot-spin';
 
