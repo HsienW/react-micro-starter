@@ -67,7 +67,7 @@ class LoadingSpin extends HTMLElement {
         .loading-spin-dot i:nth-child(3) {
             right: 0;
             bottom: 0;
-             animation-delay: 0.8s;
+            animation-delay: 0.8s;
         }
         
         .loading-spin-dot i:nth-child(4) {
