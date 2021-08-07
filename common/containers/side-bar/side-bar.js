@@ -9,8 +9,8 @@ class SideBar extends HTMLElement {
         this.domStyling();
         this.domRender();
         this.domEventInit();
-        pubSub.doSubscribe('onload', this.activeChangeStyling.bind(this));
-        pubSub.doSubscribe('route-change', this.activeChangeStyling.bind(this));
+        pubSub.doSubscribe('onload', this.updateDomActiveStyle.bind(this));
+        pubSub.doSubscribe('route-change', this.updateDomActiveStyle.bind(this));
     }
 
     domStyling() {
@@ -158,7 +158,7 @@ class SideBar extends HTMLElement {
         routeNavigation('sub-app', targetActive);
     }
 
-    activeChangeStyling() {
+    updateDomActiveStyle() {
         for (let i = 0; i < this.sideBarUl.childNodes.length; i++) {
             this.sideBarUl.childNodes[i].removeAttribute('class');
 

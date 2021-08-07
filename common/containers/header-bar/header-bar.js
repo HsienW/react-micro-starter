@@ -2,7 +2,6 @@ class HeaderBar extends HTMLElement {
     constructor() {
         super();
         this.shadow = this.attachShadow({mode: 'open'});
-        this.userInfo = null;
         this.domStyling();
         this.domRender();
         this.domEventInit();

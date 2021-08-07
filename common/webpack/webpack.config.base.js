@@ -6,10 +6,18 @@ module.exports = {
             maxInitialRequests: 7,
             // cacheGroups 用途是定義 chunks 所屬的 cache 組
             cacheGroups: {
+                // styles 權重設置為最高, 不然可能其他的 cacheGroups 會提前打包一部分 style 文件
+                styles: {
+                    name: 'styles',
+                    priority: 25,
+                    test: /.css$/,
+                    chunks: 'all',
+                    enforce: true,
+                },
                 // 拆分 react 核心
                 reactDll: {
                     name: 'react-dll',
-                    priority: 15, // 權重要大於 vendor & 其他套件
+                    priority: 10, // 權重要大於 vendor & 其他套件
                     test: (module) => {
                         return /react|react-dom|prop-types/.test(module.context);
                     },
@@ -47,12 +55,12 @@ module.exports = {
                     minChunks: 1 // 拆分條件是, 在 src 中最少 import 了1次的都拆
                 },
                 // 拆分 common code 成暫存, 避免重複打包
-                // common: {
-                //     chunks: 'initial',
-                //     name: 'common',
-                //     minSize: 100, // size 超過 100 byte 的都算
-                //     minChunks: 1 // 拆分條件是, 在 src 中最少 import 了3次的都拆
-                // }
+                common: {
+                    chunks: 'initial',
+                    name: 'common',
+                    minSize: 100, // size 超過 100 byte 的都算
+                    minChunks: 1 // 拆分條件是, 在 src 中最少 import 了3次的都拆
+                }
             }
         },
         // runtimeChunk 的作用是將包含 chunk 映射關係的列表從 main.js 中抽離出來

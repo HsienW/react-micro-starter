@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import '../../common/containers/loading-spin/loading-spin';
 import '../../common/containers/side-bar/side-bar';
 import '../../common/containers/header-bar/header-bar';
 import '../../common/containers/player-bar/player-bar';
