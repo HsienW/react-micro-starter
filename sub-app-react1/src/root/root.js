@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import {HashRouter, Switch, Route} from 'react-router-dom';
-import {routeNavigation} from '../../../common/util/route-navigation';
+import {BrowserRouter, Switch, Route, Link} from 'react-router-dom';
 import './root.scss';
 
 const React1Page1 = () => {
@@ -30,27 +29,27 @@ export const React1RootDom = (props) => {
             <div className='react1-root-title'>React1 root dom is working!</div>
             <div>test: {testValue}</div>
             <button onClick={() => click(setGlobalState)}>test</button>
-            <HashRouter basename={routerBase}>
+            <BrowserRouter>
                 <ul>
                     <li>
-                        <a onClick={() => {routeNavigation('feature', '/react1-page1');}}>React1 Page1</a>
+                        <Link to={`${routerBase}/react1-page1`}>React1 Page1</Link>
                     </li>
                     <li>
-                        <a onClick={() => {routeNavigation('feature', '/react1-page2');}}>React1 Page2</a>
+                        <Link to={`${routerBase}/react1-page2`}>React1 Page2</Link>
                     </li>
                     <li>
-                        <a onClick={() => {routeNavigation('sub-app', '/sub-app-portal');}}>To Portal</a>
+                        <Link to={'/sub-app-portal'}>Go to Portal</Link>
                     </li>
                 </ul>
                 <Switch>
-                    <Route path={'/react1-page1'}>
+                    <Route path={`${routerBase}/react1-page1`}>
                         <React1Page1/>
                     </Route>
-                    <Route path={'/react1-page2'}>
+                    <Route path={`${routerBase}/react1-page2`}>
                         <React1Page2/>
                     </Route>
                 </Switch>
-            </HashRouter>
+            </BrowserRouter>
         </div>
     );
 };

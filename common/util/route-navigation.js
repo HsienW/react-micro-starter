@@ -1,14 +1,9 @@
-function routeNavigation(type, route) {
-    if (type === 'sub-app') {
-        history.pushState(null, null, route);
+function routeNavigation(route) {
+    if (route === undefined || route === null || typeof route !== 'string') {
+        throw new Error('Please check the param route type, it must be string.');
         return;
     }
-    if (type === 'feature') {
-        location.hash = route;
-        return;
-    }
-
-    throw new Error('Please check the param route type, it must be \'sub-app\' or \'feature\'.');
+    history.pushState(null, null, route);
 }
 
 export {

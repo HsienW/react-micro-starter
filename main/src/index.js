@@ -24,6 +24,6 @@ registerMicroApps(
     }
 );
 
-setDefaultMountApp('/sub-app-portal#/login');
+setDefaultMountApp('/sub-app-portal/login');
 start();
 globalActiveListener.initAllAction();

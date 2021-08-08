@@ -56,14 +56,14 @@ class SideBar extends HTMLElement {
 
     sideBarItemClick(event) {
         let targetActive = event.target.getAttribute('active-rule');
-        routeNavigation('sub-app', targetActive);
+        routeNavigation(targetActive);
     }
 
     updateDomActiveStyle() {
         for (let i = 0; i < this.sideBarUl.childNodes.length; i++) {
             this.sideBarUl.childNodes[i].removeAttribute('class');
 
-            if (this.sideBarUl.childNodes[i].getAttribute('active-rule') === location.pathname) {
+            if (location.pathname.includes(this.sideBarUl.childNodes[i].getAttribute('active-rule'))) {
                 this.sideBarUl.childNodes[i].setAttribute('class', 'active');
             }
         }

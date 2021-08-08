@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
-import {HashRouter, Switch, Route} from 'react-router-dom';
-import {routeNavigation} from '../../../common/util/route-navigation';
+import {BrowserRouter, Switch, Route, Link} from 'react-router-dom';
 import '../../../common/containers/auth/auth';
 import './root.scss';
 
@@ -33,30 +32,30 @@ export const PortalRootDom = (props) => {
             <div className='portal-root-title'>Portal root dom is working!</div>
             <div>test: {testValue}</div>
             <button onClick={() => click(setGlobalState)}>test</button>
-            <HashRouter basename={routerBase}>
+            <BrowserRouter>
                 <ul>
                     <li>
-                        <a onClick={() => {routeNavigation('feature', '/portal-page1');}}>Portal Page1</a>
+                        <Link to={`${routerBase}/portal-page1`}>Portal Page1</Link>
                     </li>
                     <li>
-                        <a onClick={() => {routeNavigation('feature', '/portal-page2');}}>Portal Page2</a>
+                        <Link to={`${routerBase}/portal-page2`}>Portal Page2</Link>
                     </li>
                     <li>
-                        <a onClick={() => {routeNavigation('sub-app', '/sub-app-react1');}}>To React1</a>
+                        <Link to={'/sub-app-react1'}>Go to React1</Link>
                     </li>
                 </ul>
                 <Switch>
-                    <Route path={'/login'}>
+                    <Route path={`${routerBase}/login`}>
                         <Login/>
                     </Route>
-                    <Route path={'/portal-page1'}>
+                    <Route path={`${routerBase}/portal-page1`}>
                         <PortalPage1/>
                     </Route>
-                    <Route path={'/portal-page2'}>
+                    <Route path={`${routerBase}/portal-page2`}>
                         <PortalPage2/>
                     </Route>
                 </Switch>
-            </HashRouter>
+            </BrowserRouter>
         </div>
     );
 };

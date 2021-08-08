@@ -83,7 +83,7 @@ class Auth extends HTMLElement {
             token: 'default-token'
         };
         sessionStorage.setItem('user-info', JSON.stringify(userInfo));
-        routeNavigation('feature', '/portal-page1');
+        routeNavigation('/sub-app-portal');
     }
 }
 
