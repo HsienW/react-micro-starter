@@ -24,7 +24,7 @@ const sideBarStyle = `
         .side-bar ul li a {
             color: #8c8c8c
             text-decoration: none;
-            font-size: 15px;
+            font-size: 14px;
             display: block;
             padding: 12px 15px;
             transition: all 0.15s;
