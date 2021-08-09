@@ -6,7 +6,7 @@ import { PortalRootDom } from './root/root';
 import './public-path';
 
 function renderPortalRoot(props) {
-    const { container, routerBase, setGlobalState, getGlobalState, onStateChange } = props;
+    const {container, routerBase, setGlobalState, getGlobalState, onStateChange} = props;
     ReactDOM.render(
         <PortalRootDom
             routerBase={routerBase}
@@ -18,18 +18,53 @@ function renderPortalRoot(props) {
     );
 }
 
-if (!window.__POWERED_BY_QIANKUN__) {
+function renderSinglePortalRoot(props) {
+    import ('../../common/containers/loading-spin/loading-spin');
+    import ('../../common/containers/side-bar/side-bar');
+    import ('../../common/containers/header-bar/header-bar');
+    import ('../../common/containers/player-bar/player-bar');
+    import ('./style/sub-app-portal-main.scss');
 
+    const {container, routerBase, setGlobalState, getGlobalState, onStateChange} = props;
+
+    ReactDOM.render(
+        <>
+            <div className="main-layout">
+                <div className="side-layout">
+                    <side-bar-container></side-bar-container>
+                </div>
+                <div className="header-layout">
+                    <header-bar-container></header-bar-container>
+                </div>
+                <div className="content-layout">
+                    <PortalRootDom
+                        routerBase={routerBase}
+                        setGlobalState={setGlobalState}
+                        getGlobalState={getGlobalState}
+                        onStateChange={onStateChange}
+                    />
+                </div>
+                <div className="footer-layout">
+                    <player-bar-container></player-bar-container>
+                </div>
+            </div>
+            <loading-spin-container></loading-spin-container>
+        </>,
+        container ? container.querySelector('#portal-root') : document.querySelector('#portal-root')
+    );
+}
+
+if (!window.__POWERED_BY_QIANKUN__) {
     console.log('portal 我自己運行了');
 
     const routerBase = '/sub-app-portal';
     const { getGlobalState, setGlobalState } = singleAppGlobalState;
-    const props = {routerBase, getGlobalState, setGlobalState};
+    const props = { routerBase, getGlobalState, setGlobalState };
 
     singleAppGlobalState.setGlobalState('init', 'portal 我自己運行了');
     globalActiveListener.initAllAction();
 
-    renderPortalRoot(props);
+    renderSinglePortalRoot(props);
 }
 
 /**

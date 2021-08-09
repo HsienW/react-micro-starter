@@ -17,6 +17,42 @@ function renderReact1Root(props) {
     );
 }
 
+function renderSingleReact1Root(props) {
+    import ('../../common/containers/loading-spin/loading-spin');
+    import ('../../common/containers/side-bar/side-bar');
+    import ('../../common/containers/header-bar/header-bar');
+    import ('../../common/containers/player-bar/player-bar');
+    import ('./style/sub-app-react1-main.scss');
+
+    const { container, routerBase, setGlobalState, getGlobalState, onStateChange } = props;
+
+    ReactDOM.render(
+        <>
+            <div className="main-layout">
+                <div className="side-layout">
+                    <side-bar-container></side-bar-container>
+                </div>
+                <div className="header-layout">
+                    <header-bar-container></header-bar-container>
+                </div>
+                <div className="content-layout">
+                    <React1RootDom
+                        routerBase={routerBase}
+                        setGlobalState={setGlobalState}
+                        getGlobalState={getGlobalState}
+                        onStateChange={onStateChange}
+                    />
+                </div>
+                <div className="footer-layout">
+                    <player-bar-container></player-bar-container>
+                </div>
+            </div>
+            <loading-spin-container></loading-spin-container>
+        </>,
+        container ? container.querySelector('#react1-root') : document.querySelector('#react1-root')
+    );
+}
+
 if (!window.__POWERED_BY_QIANKUN__) {
     console.log('react1 我自己運行了');
 
@@ -27,7 +63,7 @@ if (!window.__POWERED_BY_QIANKUN__) {
     singleAppGlobalState.setGlobalState('init', 'react1 我自己運行了');
     globalActiveListener.initAllAction();
 
-    renderReact1Root(props);
+    renderSingleReact1Root(props);
 }
 
 /**
